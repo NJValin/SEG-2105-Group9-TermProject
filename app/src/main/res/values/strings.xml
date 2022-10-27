@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">SEG2105_TermProjectCourseEnrollmentApp</string>
-    <color name="cream">#fdffec</color>
-    <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
-    <color name="garnet">#8f001a</color>
-    <color name="grey">#80746c</color>
+
     <string name="userName">User Name</string>
     <string name="passWord">Password</string>
     <string name="signIn">Sign In</string>
