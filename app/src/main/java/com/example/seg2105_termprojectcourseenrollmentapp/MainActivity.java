@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             userName.setText("");
             password.setText("");
         }
-        if (db.checkLogin(usrname, passWord)) {
+        else if (db.checkLogin(usrname, passWord)) {
             validAccount=true;
         }
     }

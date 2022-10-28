@@ -48,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cntntVal = new ContentValues();
         cntntVal.put("userName", userName);
         cntntVal.put("password", password);
-        cntntVal.put("userType", userType)
+        cntntVal.put("userType", userType);
         long result = crsEnrolldb.insert("users", null, cntntVal);//returns -1 if insertion isn't successful
         return result!=-1;
     }
