@@ -1,0 +1,168 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:background="@color/grey"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomePage">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/welcomeAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20pt"
+            android:text="@string/wlcmAdmn"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="15pt"
+            app:layout_constraintBottom_toTopOf="@+id/createClass"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.047"
+            tools:layout_editor_absoluteX="-16dp" />
+
+        <Button
+            android:id="@+id/createClass"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/garnet"
+            app:layout_constraintRight_toLeftOf="@+id/deleteClass"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text = "Create Class"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeAdmin" />
+
+        <Button
+            android:id="@+id/deleteClass"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/garnet"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text = "Delete Class"
+            android:textColor = "@color/white"
+            app:layout_constraintLeft_toRightOf="@+id/createClass"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeAdmin" />
+        <Button
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:id="@+id/editClass"
+            android:text="Edit Class"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/createClass"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/searchUsers"
+            android:backgroundTint="@color/garnet"
+            />
+        <Button
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:id="@+id/searchUsers"
+            android:backgroundTint="@color/garnet"
+            android:text="Search Users"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/deleteClass"
+            app:layout_constraintLeft_toRightOf="@+id/editClass"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newCourseCode_layout"
+            android:backgroundTint="@color/garnet"
+            android:text="Confirm"
+            android:textColor="@color/white"/>
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/newCourseCode_layout"
+            android:backgroundTint="@color/garnet"
+            android:text="Delete"
+            android:textColor="@color/white"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchBar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/newBar_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchUsers">
+            <EditText
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:hint="Search for users"
+                android:paddingVertical="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp"
+                tools:layout_editor_absoluteX="-4dp"
+                tools:layout_editor_absoluteY="310dp">
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newBar_layout"
+            android:layout_width="80pt"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3pt"
+            android:padding="1dp"
+            app:layout_constraintLeft_toRightOf="@+id/newCourseCode_layout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar_layout"
+            app:layout_constraintBottom_toTopOf="@id/confirm">
+
+            <EditText
+                android:id="@+id/newNameBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:hint="Enter Name"
+                android:paddingVertical="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp">
+
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newCourseCode_layout"
+            android:layout_width="80pt"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3pt"
+            app:layout_constraintBottom_toTopOf="@id/confirm"
+            app:layout_constraintRight_toLeftOf="@+id/newBar_layout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar_layout">
+            <EditText
+                android:id="@+id/newCourseCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:hint="Course Code"
+                android:paddingVertical="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp">
+
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>
