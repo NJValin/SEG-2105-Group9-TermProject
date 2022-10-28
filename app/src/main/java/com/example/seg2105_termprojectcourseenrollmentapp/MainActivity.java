@@ -2,6 +2,7 @@ package com.example.seg2105_termprojectcourseenrollmentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         db = new DBHelper(this);
         signIn.setOnClickListener(this);
 
+        db.addUsers("admin", "admin123", "admin");
     }
 
     @Override
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (db.checkLogin(usrname, passWord)) {
             validAccount=true;
+
         }
     }
 }

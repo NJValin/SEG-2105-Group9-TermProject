@@ -83,6 +83,11 @@ public class DBHelper extends SQLiteOpenHelper {
         crsr.close();
         return toReturn;
     }
+    public String getUserType(String username) {
+        crsEnrolldb=this.getReadableDatabase();
+        Cursor crsr = crsEnrolldb.rawQuery("select userType from users where userName = ?", new String[] {username});
+        return crsr.toString();
+    }
 
 
 }
