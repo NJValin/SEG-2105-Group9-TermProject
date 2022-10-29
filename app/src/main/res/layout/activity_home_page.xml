@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomePage">
+    tools:context=".AdminHomePage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -106,6 +106,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
                 android:hint="Search for users"
+                android:maxLines="1"
+                android:inputType="text"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -131,6 +133,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
                 android:hint="Enter Name"
+                android:maxLines="1"
+                android:inputType="text"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
@@ -153,6 +157,8 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
                 android:hint="Course Code"
+                android:maxLines="1"
+                android:inputType="text"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"

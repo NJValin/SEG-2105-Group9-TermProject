@@ -9,31 +9,31 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author Neil Valin
  */
 public class DBHelper extends SQLiteOpenHelper {
-    private SQLiteDatabase crsEnrolldb;
+    private SQLiteDatabase db;
     public DBHelper (Context context) {
         super(context, "CourseEnrollment.db", null, 1);
     }
 
     /**
      *
-     * @param crsEnrolldb
+     * @param db
      */
     @Override
-    public void onCreate(SQLiteDatabase crsEnrolldb) {
-        crsEnrolldb.execSQL("create Table users(userName Text primary key, password Text, userType Text)");
-        crsEnrolldb.execSQL("create Table courses(courseCode Text primary key, courseName Text, courseDays Text)");
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("create Table users(userName Text primary key, password Text, userType Text)");
+        db.execSQL("create Table courses(courseCode Text primary key, courseName Text, courseDays Text)");
     }
 
     /**
      *
-     * @param crsEnrolldb
+     * @param db
      * @param i
      * @param i1
      */
     @Override
-    public void onUpgrade(SQLiteDatabase crsEnrolldb, int i, int i1) {
-        crsEnrolldb.execSQL("drop Table if exists users");
-        crsEnrolldb.execSQL("drop Table if exists courses");
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("drop Table if exists users");
+        db.execSQL("drop Table if exists courses");
     }
 
     /**
@@ -44,12 +44,12 @@ public class DBHelper extends SQLiteOpenHelper {
      * @return a boolean value that is true if the insertion is successful (values are unique to table), else false
      */
     public boolean addUsers(String userName, String password, String userType) {
-        crsEnrolldb = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         ContentValues cntntVal = new ContentValues();
         cntntVal.put("userName", userName);
         cntntVal.put("password", password);
         cntntVal.put("userType", userType);
-        long result = crsEnrolldb.insert("users", null, cntntVal);//returns -1 if insertion isn't successful
+        long result = db.insert("users", null, cntntVal);//returns -1 if insertion isn't successful
         return result!=-1;
     }
 
@@ -59,12 +59,21 @@ public class DBHelper extends SQLiteOpenHelper {
      * @return
      */
     public boolean addCourse(String crsCode, String crsName) {
-        crsEnrolldb = this.getWritableDatabase();
+        db = this.getWritableDatabase();
         ContentValues cntntVal = new ContentValues();
         cntntVal.put("courseCode", crsCode);
         cntntVal.put("courseName", crsName);
-        long result = crsEnrolldb.insert("courses", null, cntntVal);//returns -1 if insertion isn't successful
+        long result = db.insert("courses", null, cntntVal);//returns -1 if insertion isn't successful
         return result!=-1;
+    }
+
+
+    public boolean removeUser(String username) {
+        if (getUserType(username).equals("admin")) {
+            return false;
+        }
+        db.execSQL("delete from users where userName=?", new String[] {username});
+        return true;
     }
 
     /**
@@ -75,8 +84,8 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public boolean checkLogin(String username, String password) {
         boolean toReturn= false;
-        crsEnrolldb = this.getWritableDatabase();
-        Cursor crsr = crsEnrolldb.rawQuery("select * from users where userName= ? and password=?", new String[] {username, password});
+        db = this.getWritableDatabase();
+        Cursor crsr = db.rawQuery("select * from users where userName= ? and password=?", new String[] {username, password});
         if (crsr.getCount()>0) {
             toReturn = true;
         }
@@ -84,8 +93,8 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
     }
     public String getUserType(String username) {
-        crsEnrolldb=this.getReadableDatabase();
-        Cursor crsr = crsEnrolldb.rawQuery("select userType from users where userName = ?", new String[] {username});
+        db=this.getReadableDatabase();
+        Cursor crsr = db.rawQuery("select userType from users where userName = ?", new String[] {username});
         return crsr.toString();
     }
 

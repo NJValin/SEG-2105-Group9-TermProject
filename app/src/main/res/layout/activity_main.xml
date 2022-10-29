@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginPage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,15 +18,25 @@
             android:layout_height="wrap_content"
             android:width="80pt"
             android:backgroundTint="@color/garnet"
-            android:fontFamily="@font/myriad_pro_regular"
             android:text="@string/signIn"
             android:textSize="20sp"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/loginSuccessful_layout" />
 
+        <Button
+            android:id="@+id/register"
+            android:layout_width="80pt"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/garnet"
+            android:text="Register"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/signInButton" />
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="236dp"
@@ -51,6 +61,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/userName"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"
@@ -78,6 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
+                android:maxLines="1"
+                android:inputType="text"
                 android:hint="@string/passWord"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"

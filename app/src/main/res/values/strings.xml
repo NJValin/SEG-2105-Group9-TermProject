@@ -4,7 +4,7 @@
     <string name="userName">User Name</string>
     <string name="passWord">Password</string>
     <string name="signIn">Sign In</string>
-    <string name="title_activity_home_page">HomePage</string>
+    <string name="title_activity_home_page">AdminHomePage</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

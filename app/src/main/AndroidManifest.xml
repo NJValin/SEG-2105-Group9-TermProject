@@ -13,7 +13,7 @@
         android:theme="@style/Theme.SEG2105_TermProjectCourseEnrollmentApp"
         tools:targetApi="31">
         <activity
-            android:name=".HomePage"
+            android:name=".AdminHomePage"
             android:exported="false"
             android:label="@string/title_activity_home_page"
             android:theme="@style/Theme.SEG2105_TermProjectCourseEnrollmentApp.NoActionBar">
@@ -22,7 +22,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
