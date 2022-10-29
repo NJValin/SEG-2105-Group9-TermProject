@@ -54,23 +54,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
                 }
                 break;
         }
-        String usrname = userName.getText().toString();
-        String passWord = password.getText().toString();
-        if (usrname.equals("")||passWord.equals("")) {
-            errorMessage.setText("Please enter a valid username or password");
-            userName.setText("");
-            password.setText("");
-        }
-        else if (db.checkLogin(usrname, passWord)) {
-            validAccount=true;
-
-        }
-        else {
-            validAccount=false;
-            errorMessage.setText("User name/password isn't valid");
-            userName.setText("");
-            password.setText("");
-        }
+        
     }
     private boolean isValidInput(String username, String password) {
         boolean toReturn = true;
