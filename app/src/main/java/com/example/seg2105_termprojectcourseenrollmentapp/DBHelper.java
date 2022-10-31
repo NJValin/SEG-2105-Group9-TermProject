@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create Table users(userName Text primary key, password Text, userType Text)");
+        db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
         db.execSQL("create Table courses(courseCode Text primary key, courseName Text, courseDays Text)");
     }
 
@@ -43,13 +43,19 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param userType The type of user the
      * @return a boolean value that is true if the insertion is successful (values are unique to table), else false
      */
-    public boolean addUsers(String userName, String password, String userType) {
+    public boolean addUsers(String userName, String password, String userType, String firstName, String lastName) {
         db = this.getWritableDatabase();
         ContentValues cntntVal = new ContentValues();
         cntntVal.put("userName", userName);
         cntntVal.put("password", password);
         cntntVal.put("userType", userType);
+        cntntVal.put("firstname", firstName);
+        cntntVal.put("lastname", lastName);
+        if (checkLogin(userName, password)==true) {
+            return false;
+        }
         long result = db.insert("users", null, cntntVal);//returns -1 if insertion isn't successful
+
         return result!=-1;
     }
 
@@ -82,10 +88,10 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param password the password provided by the user.
      * @return a boolean value that determines if the login attempt is valid.
      */
-    public boolean checkLogin(String username, String password) {
+    public boolean checkLogin(String username, String passWord) {
         boolean toReturn= false;
         db = this.getWritableDatabase();
-        Cursor crsr = db.rawQuery("select * from users where userName= ? and password=?", new String[] {username, password});
+        Cursor crsr = db.rawQuery("select userName, password from users where userName= ? and password = ?", new String[] {username, passWord});
         if (crsr.getCount()>0) {
             toReturn = true;
         }
@@ -95,7 +101,20 @@ public class DBHelper extends SQLiteOpenHelper {
     public String getUserType(String username) {
         db=this.getReadableDatabase();
         Cursor crsr = db.rawQuery("select userType from users where userName = ?", new String[] {username});
+        db.close();
         return crsr.toString();
+    }
+    public String[] getName(String username) {
+        db = this.getWritableDatabase();
+        Cursor crsr1 = db.rawQuery("select firstname from users where userName=?", new String[] {username});
+        Cursor crsr2 = db.rawQuery("select lastname from users where userName=?", new String[] {username});
+        db.close();
+        return new String[] {crsr1.toString(), crsr2.toString()};
+    }
+    public void deleteAllUsers() {
+        db = this.getWritableDatabase();
+        db.execSQL("delete from users");
+        db.close();
     }
 
 

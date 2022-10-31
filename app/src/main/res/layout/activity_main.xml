@@ -21,6 +21,7 @@
             android:text="@string/signIn"
             android:textSize="20sp"
             android:textColor="@color/white"
+
             app:layout_constraintBottom_toTopOf="@id/register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +38,33 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/signInButton" />
+        <Button
+            android:layout_width="80pt"
+            android:layout_height="wrap_content"
+            android:id="@+id/instructorBtn"
+            android:backgroundTint="@color/garnet"
+            android:text="Instructor"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="20sp"
+            app:layout_constraintTop_toBottomOf="@id/register"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/studentBtn"
+            />
+        <Button
+            android:layout_width="80pt"
+            android:layout_height="wrap_content"
+            android:id="@+id/studentBtn"
+            android:backgroundTint="@color/garnet"
+            android:text="Student"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/register"
+            app:layout_constraintLeft_toRightOf="@id/instructorBtn"
+            app:layout_constraintRight_toRightOf="parent"/>
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="236dp"
@@ -80,7 +108,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:passwordToggleEnabled="false"
+            app:passwordToggleEnabled="true"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/userName_layout"
             app:layout_constraintVertical_bias="0.0">
@@ -101,7 +129,64 @@
             </EditText>
 
         </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstName_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passWord_layout"
+            app:layout_constraintVertical_bias="0.0">
 
+            <EditText
+                android:id="@+id/firstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:maxLines="1"
+                android:inputType="text"
+                android:visibility="gone"
+                android:hint="Enter first name"
+                android:paddingVertical="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp">
+
+            </EditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastName_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/firstName_layout"
+            app:layout_constraintVertical_bias="0.0">
+
+            <EditText
+                android:id="@+id/lastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:maxLines="1"
+                android:inputType="text"
+                android:hint="Enter first name"
+                android:visibility="gone"
+                android:paddingVertical="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp">
+
+            </EditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/loginSuccessful_layout"
             android:layout_width="match_parent"
@@ -111,7 +196,7 @@
             android:padding="30dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passWord_layout"
+            app:layout_constraintTop_toBottomOf="@+id/lastName_layout"
             app:layout_constraintVertical_bias="0.365">
 
             <TextView
