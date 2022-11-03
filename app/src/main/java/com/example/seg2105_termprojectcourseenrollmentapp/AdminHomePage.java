@@ -48,7 +48,21 @@ public class AdminHomePage extends AppCompatActivity {
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.createClass:
+                if(validInput((newClassCode).toString(),(newClassName).toString())){
+                    createCourse((newClassCode).toString(),(newClassName).toString());
+                }
+            case R.id.deleteClass:
+                if(validInput((newClassCode).toString(),(newClassName).toString())) {
+
+                }
+            case R.id.editClass:
+                if(validInput((newClassCode).toString(),(newClassName).toString())){
+                    editCourse(newClassCode.toString(),newClassName.toString());
+                }
+            case R.id.searchUsers:
+                
         }
+
 
     }
     @Override
@@ -63,7 +77,10 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void createCourse(String classCode, String className){
-
+        boolean x = db.addCourse(classCode,className);
+        if(x == false) {
+            wlcmAdminmessage.setText("Cannot add course. Please check if course code / course name is already in use");
+        }
     }
 
     private void deleteCourse(String classCode, String className){
