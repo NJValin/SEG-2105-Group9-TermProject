@@ -41,6 +41,9 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.createClass:
+        }
 
     }
     @Override
@@ -48,5 +51,54 @@ public class AdminHomePage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home_page);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    private void editCourse(String classCode, String className){
+
+    }
+
+    private void createCourse(String classCode, String className){
+
+    }
+
+    private void deleteCourse(String classCode, String className){
+
+    }
+
+    private void deleteUsers(String username){
+
+    }
+    /**
+     *
+     * @param input1 The input of the admin
+     * @return a boolean value that is true if the insertion is successful (values are unique to table), else false
+     */
+
+    private boolean validInput(String input1){
+        boolean returnValue = true;
+        if (input1.equals("")) {
+            wlcmAdminmessage.setText("Please enter a valid username or password");
+            searchforUsers.setText("");
+            returnValue=false;
+        }
+        return returnValue;
+    }
+
+    /**
+     *
+     * @param input1 The input of the admin
+     * @param input1 The input of the admin
+     * @return a boolean value that is true if the insertion is successful (values are unique to table), else false
+     */
+    //Overload
+    private boolean validInput(String input1, String input2){
+        boolean valReturn = true;
+        if (input1.equals("")||input2.equals("")) {
+            wlcmAdminmessage.setText("Please enter a valid username or password");
+            newClassCode.setText("");
+            newClassName.setText("");
+            valReturn=false;
+        }
+        return valReturn;
     }
 }

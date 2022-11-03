@@ -34,6 +34,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:text = "Create Class"
             android:textColor="@color/white"
+            android:onClick="onClick"
             app:layout_constraintTop_toBottomOf="@+id/welcomeAdmin" />
 
         <Button
@@ -132,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
-                android:hint="Enter Name"
+                android:hint="@string/enter_name"
                 android:maxLines="1"
                 android:inputType="text"
                 android:paddingVertical="20dp"
