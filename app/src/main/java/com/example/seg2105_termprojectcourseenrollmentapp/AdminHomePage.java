@@ -24,6 +24,8 @@ public class AdminHomePage extends AppCompatActivity {
     private TextView wlcmAdminmessage;
     private Button createClass, deleteClass, edtClass, searchUsers;
     private EditText searchforUsers, newClassCode, newClassName;
+    private DBHelper db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,10 @@ public class AdminHomePage extends AppCompatActivity {
         searchforUsers = (EditText) findViewById(R.id.searchBar);
         newClassCode = (EditText) findViewById(R.id.newCourseCode);
         newClassName = (EditText) findViewById(R.id.newNameBar);
-
+        db = new DBHelper(this);
+        Bundle extras = getIntent().getExtras();
+        String[] name = db.getName(extras.getString("username"));
+        wlcmAdminmessage.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as admin");
     }
 
     public void onClick(View view) {
