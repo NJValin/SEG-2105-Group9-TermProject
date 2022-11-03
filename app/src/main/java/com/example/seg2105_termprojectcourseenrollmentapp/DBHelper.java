@@ -87,6 +87,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public void removeCourse(String crsCode, String crsName) {
+        db.execSQL("delete from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
+    }
+    public void editCourse(String newCrsCode, String oldCrsCode, String newCrsName, String oldCrsName) {
+        db.execSQL("update courses set courseCode=? where courseName=?", new String[] {newCrsCode, oldCrsName});
+        db.execSQL("update courses set courseName=? where courseCode=?", new String[] {newCrsName, oldCrsCode});
+    }
     /**
      *
      * @param username the username provided by the user.

@@ -61,7 +61,7 @@
             android:layout_height="30pt"
             android:id="@+id/searchUsers"
             android:backgroundTint="@color/garnet"
-            android:text="Search Users"
+            android:text="Delete User"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/deleteClass"
             app:layout_constraintLeft_toRightOf="@+id/editClass"
@@ -128,6 +128,33 @@
 
             <EditText
                 android:id="@+id/newNameBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/grey"
+                android:hint="Enter Name"
+                android:maxLines="1"
+                android:inputType="text"
+                android:paddingVertical="20dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="20sp">
+
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newName_layout"
+            android:layout_width="80pt"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3pt"
+            android:padding="1dp"
+            android:visibility="visible"
+            app:layout_constraintLeft_toRightOf="@+id/newCourseCode_layout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchBar_layout"
+            app:layout_constraintBottom_toTopOf="@id/confirm">
+
+            <EditText
+                android:id="@+id/newName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
