@@ -78,7 +78,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return result!=-1;
     }
 
-
+    public boolean userExists(String username) {
+        Cursor crsr= db.rawQuery("select userName from users where userName=?", new String[] {username});
+        if (crsr.getCount()>0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public boolean removeUser(String username) {
         if (getUserType(username).equals("admin")) {
             return false;
