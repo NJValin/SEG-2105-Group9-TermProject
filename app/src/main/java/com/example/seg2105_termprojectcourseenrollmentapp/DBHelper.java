@@ -74,6 +74,10 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cntntVal = new ContentValues();
         cntntVal.put("courseCode", crsCode);
         cntntVal.put("courseName", crsName);
+        cntntVal.put("courseDays", "");
+        if (courseExists(crsCode, crsName)) {
+            return false;
+        }
         long result = db.insert("courses", null, cntntVal);//returns -1 if insertion isn't successful
         return result!=-1;
     }
@@ -92,7 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     public boolean courseExists(String crsCode, String crsName) {
         db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
+        Cursor c = db.rawQuery("select * from courses where courseCode = ? and courseName = ?", new String[] {crsCode, crsName});
         if (c.getCount()>0) {
             c.close();
             return true;

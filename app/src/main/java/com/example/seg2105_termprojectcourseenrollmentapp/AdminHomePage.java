@@ -82,16 +82,15 @@ public class AdminHomePage extends AppCompatActivity {
                 oldcode = oldClassCode.getText().toString();
                 oldName = oldClassName.getText().toString();
                 errorMessage.setText(db.courseExists(oldcode, oldName)+"");
-                if (validInput(oldcode, oldName) && db.courseExists(oldcode, oldName)) {
-                    errorMessage.setText("");
-                    searchforUsers.setVisibility(view.GONE);
-                    edtClass.setVisibility(view.VISIBLE);
-                    deleteClass.setVisibility(view.VISIBLE);
-                    returnToHome.setVisibility(view.VISIBLE);
-                    searchUsers.setVisibility(view.GONE);
-                    createClass.setVisibility(view.GONE);
-                    newClassCode.setVisibility(view.VISIBLE);
-                    newClassName.setVisibility(view.VISIBLE);
+                if (validInput(oldcode, oldName)) {
+                    searchforUsers.setVisibility(View.GONE);
+                    edtClass.setVisibility(View.VISIBLE);
+                    deleteClass.setVisibility(View.VISIBLE);
+                    returnToHome.setVisibility(View.VISIBLE);
+                    searchUsers.setVisibility(View.GONE);
+                    createClass.setVisibility(View.GONE);
+                    newClassCode.setVisibility(View.VISIBLE);
+                    newClassName.setVisibility(View.VISIBLE);
                 }
                 else {
                     //errorMessage.setText("Class doesn't exist");
@@ -111,6 +110,7 @@ public class AdminHomePage extends AppCompatActivity {
                 newClassName.setVisibility(view.GONE);
                 oldClassName.setText("");
                 oldClassCode.setText("");
+                errorMessage.setText("");
                 break;
             case R.id.editClass:
                 if (validInput(newClassCode.getText().toString(), newClassName.getText().toString())) {
@@ -144,6 +144,8 @@ public class AdminHomePage extends AppCompatActivity {
             errorMessage.setText("Cannot add course. Please check if course code / course name is already in use");
         }
         else {
+
+            errorMessage.setText("");
             oldClassCode.setText("");
             oldClassName.setText("");
         }
