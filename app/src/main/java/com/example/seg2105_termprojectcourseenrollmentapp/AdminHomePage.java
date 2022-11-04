@@ -65,6 +65,7 @@ public class AdminHomePage extends AppCompatActivity {
                 if(validInput((oldClassCode).toString(),(oldClassName).toString())){
                     createCourse((oldClassCode).toString(),(oldClassName).toString());
                 }
+
                 break;
 
             case R.id.searchUsers:
@@ -110,7 +111,7 @@ public class AdminHomePage extends AppCompatActivity {
                 }
 
                 break;
-            case R.id.deleteClass:
+ 
         }
 
 
@@ -125,7 +126,12 @@ public class AdminHomePage extends AppCompatActivity {
     private void editCourse(String classCode, String className, String oldCode, String oldName){
         db.editCourse(classCode, className, oldCode, oldName);
     }
-
+    /**
+     *
+     * @param classCode The code of the class to be created by the admin
+     * @param className The name of the class to be created by the admin
+     * @return null
+     */
     private void createCourse(String classCode, String className){
         boolean x = db.addCourse(classCode,className);
         if(x == false) {
@@ -134,10 +140,13 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void deleteCourse(String classCode, String className){
-
+        if(validInput((newClassCode).toString(),(newClassName).toString())){
+            db.removeCourse((newClassCode).toString(),(newClassName).toString());
+        }
     }
 
     private void deleteUsers(String username){
+
         if (db.userExists(searchforUsers.getText().toString())) {
             db.removeUser(username);
         }
@@ -147,6 +156,7 @@ public class AdminHomePage extends AppCompatActivity {
             oldClassCode.setText("");
             oldClassName.setText("");
         }
+
     }
     /**
      *
