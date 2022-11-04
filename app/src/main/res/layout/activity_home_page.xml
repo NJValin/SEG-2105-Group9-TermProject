@@ -67,7 +67,7 @@
             android:text = "Delete Class"
             android:textColor = "@color/white"
             app:layout_constraintLeft_toRightOf="@+id/createClass"
-            app:layout_constraintTop_toBottomOf="@id/searchCourses" />
+            app:layout_constraintTop_toBottomOf="@+id/welcomeAdmin" />
         <Button
             android:layout_width="80pt"
             android:layout_height="30pt"
@@ -75,7 +75,7 @@
             android:id="@+id/editClass"
             android:text="Edit Class"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/searchCourses"
+            app:layout_constraintTop_toBottomOf="@+id/createClass"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/searchUsers"
             android:backgroundTint="@color/garnet"
@@ -135,7 +135,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:visibility="visible"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editClass">
+            app:layout_constraintTop_toBottomOf="@+id/searchCourses">
             <EditText
                 android:id="@+id/searchBar"
                 android:layout_width="match_parent"
@@ -184,6 +184,7 @@
             android:layout_width="80pt"
             android:layout_height="wrap_content"
             android:padding="1dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/errorCode"
             app:layout_constraintLeft_toRightOf="@id/newcrsCode_layout"
             app:layout_constraintRight_toRightOf="parent"
@@ -195,7 +196,6 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/grey"
                 android:hint="New Name"
-                android:visibility="gone"
                 android:inputType="text"
                 android:maxLines="1"
                 android:paddingVertical="20dp"
@@ -212,6 +212,7 @@
             android:id="@+id/newcrsCode_layout"
             app:layout_constraintBottom_toTopOf="@id/errorCode"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:visibility="gone"
             app:layout_constraintRight_toLeftOf="@id/newName_layout"
             app:layout_constraintTop_toBottomOf="@+id/newCourseCode_layout"
             >
@@ -221,7 +222,6 @@
                 android:backgroundTint="@color/grey"
                 android:id="@+id/newCode"
                 android:hint="New Code"
-                android:visibility="gone"
                 android:maxLines="1"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"
