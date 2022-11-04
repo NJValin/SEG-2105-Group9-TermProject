@@ -58,22 +58,60 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        String oldcode;
+        String oldName;
         switch(view.getId()){
             case R.id.createClass:
-                if(validInput((newClassCode).toString(),(newClassName).toString())){
-                    createCourse((newClassCode).toString(),(newClassName).toString());
+                if(validInput((oldClassCode).toString(),(oldClassName).toString())){
+                    createCourse((oldClassCode).toString(),(oldClassName).toString());
                 }
-            case R.id.deleteClass:
-                if(validInput((newClassCode).toString(),(newClassName).toString())) {
-                    deleteCourse((newClassCode).toString(),(newClassName).toString());
-                }
-            case R.id.editClass:
-                if(validInput((newClassCode).toString(),(newClassName).toString())){
-                    editCourse(newClassCode.toString(),newClassName.toString());
-                }
+
+                break;
+
             case R.id.searchUsers:
-                deleteUsers(searchforUsers.getText().toString());
-                
+                if (validInput(searchforUsers.getText().toString())) {
+                    deleteUsers(searchforUsers.getText().toString());
+                }
+                else {
+                    errorMessage.setText("");
+                    oldClassCode.setText("");
+                    oldClassName.setText("");
+                }
+                break;
+            case R.id.searchCourses:
+                oldcode = oldClassCode.getText().toString();
+                oldName = oldClassName.getText().toString();
+                if (validInput(oldcode, oldName)) {
+                    errorMessage.setText("");
+                    searchforUsers.setVisibility(view.GONE);
+                    edtClass.setVisibility(view.VISIBLE);
+                    deleteClass.setVisibility(view.VISIBLE);
+                    returnToHome.setVisibility(view.VISIBLE);
+                    searchUsers.setVisibility(view.GONE);
+                    createClass.setVisibility(view.GONE);
+                    newClassCode.setVisibility(view.VISIBLE);
+                    newClassName.setVisibility(view.VISIBLE);
+                }
+                break;
+            case R.id.returnToHome:
+                searchforUsers.setVisibility(view.VISIBLE);
+                searchUsers.setVisibility(view.VISIBLE);
+                createClass.setVisibility(view.VISIBLE);
+                edtClass.setVisibility(view.GONE);
+                deleteClass.setVisibility(view.GONE);
+                returnToHome.setVisibility(view.GONE);
+                newClassCode.setVisibility(view.GONE);
+                newClassName.setVisibility(view.GONE);
+                oldClassName.setText("");
+                oldClassCode.setText("");
+                break;
+            case R.id.editClass:
+                if (validInput(newClassCode.getText().toString(), newClassName.getText().toString())) {
+                    editCourse(newClassCode.getText().toString(), newClassName.getText().toString(), oldClassCode.getText().toString(), oldClassName.getText().toString());
+                }
+
+                break;
+ 
         }
 
 
@@ -85,8 +123,8 @@ public class AdminHomePage extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void editCourse(String classCode, String className){
-
+    private void editCourse(String classCode, String className, String oldCode, String oldName){
+        db.editCourse(classCode, className, oldCode, oldName);
     }
     /**
      *
@@ -108,7 +146,17 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void deleteUsers(String username){
-        db.removeUser(username);
+
+        if (db.userExists(searchforUsers.getText().toString())) {
+            db.removeUser(username);
+        }
+        else {
+            errorMessage.setText("user doesn't exist");
+            searchUsers.setText("");
+            oldClassCode.setText("");
+            oldClassName.setText("");
+        }
+
     }
     /**
      *
@@ -119,7 +167,7 @@ public class AdminHomePage extends AppCompatActivity {
     private boolean validInput(String input1){
         boolean returnValue = true;
         if (input1.equals("")) {
-            wlcmAdminmessage.setText("Please enter a valid username or password");
+            errorMessage.setText("Please enter a valid username or password");
             searchforUsers.setText("");
             returnValue=false;
         }
@@ -136,9 +184,9 @@ public class AdminHomePage extends AppCompatActivity {
     private boolean validInput(String input1, String input2){
         boolean valReturn = true;
         if (input1.equals("")||input2.equals("")) {
-            wlcmAdminmessage.setText("Please enter a valid username or password");
-            newClassCode.setText("");
-            newClassName.setText("");
+            errorMessage.setText("Please enter a valid username or password");
+            oldClassCode.setText("");
+            oldClassName.setText("");
             valReturn=false;
         }
         return valReturn;

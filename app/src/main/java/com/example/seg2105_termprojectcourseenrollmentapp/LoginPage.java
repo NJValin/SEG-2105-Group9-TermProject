@@ -35,7 +35,6 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         register.setOnClickListener(this);
         studentBtn.setOnClickListener(this);
         instructorBtn.setOnClickListener(this);
-        db.deleteAllUsers();
         boolean y = register("admin", "admin123", "admin", "university", "of Ottawa");
 
     }
@@ -139,7 +138,6 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
     }
     private void toHomePage() {
         String userType = db.getUserType(userName.getText().toString());
-        errorMessage.setText(userType);
         if (userType.equals("admin")) {
             Intent i = new Intent(this, AdminHomePage.class);
             i.putExtra("username", userName.getText().toString());
@@ -151,7 +149,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             this.password.setText("");
         }
         else {
-            //errorMessage.setText("Not yet implemented");
+            errorMessage.setText("Not yet implemented");
             userName.setText("");
             this.password.setText("");
         }
