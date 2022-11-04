@@ -116,6 +116,10 @@ public class AdminHomePage extends AppCompatActivity {
                 if (validInput(newClassCode.getText().toString(), newClassName.getText().toString())) {
                     editCourse(newClassCode.getText().toString(), newClassName.getText().toString(), oldClassCode.getText().toString(), oldClassName.getText().toString());
                 }
+                oldClassName.setText("");
+                oldClassCode.setText("");
+                newClassName.setText("");
+                newClassCode.setText("");
 
                 break;
             case R.id.deleteClass:
