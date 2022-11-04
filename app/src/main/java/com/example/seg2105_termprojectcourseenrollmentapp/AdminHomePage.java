@@ -60,6 +60,7 @@ public class AdminHomePage extends AppCompatActivity {
                     editCourse(newClassCode.toString(),newClassName.toString());
                 }
             case R.id.searchUsers:
+                deleteUsers(searchforUsers.getText().toString());
                 
         }
 
@@ -95,7 +96,7 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void deleteUsers(String username){
-
+        db.removeUser(username);
     }
     /**
      *
