@@ -95,16 +95,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
     public boolean courseExists(String crsCode, String crsName) {
-        db = this.getReadableDatabase();
-        Cursor c = db.rawQuery("select * from courses where courseCode = ? and courseName = ?", new String[] {crsCode, crsName});
-        if (c.getCount()>0) {
-            c.close();
-            return true;
+        boolean toReturn= false;
+        db = this.getWritableDatabase();
+        Cursor crsr = db.rawQuery("select * from courses where courseCode = ? and courseName = ?", new String[] {crsCode, crsName});
+        if (crsr.getCount()>0) {
+            toReturn = true;
         }
-        else {
-            c.close();
-            return false;
-        }
+        crsr.close();
+        return toReturn;
     }
     public boolean removeUser(String username) {
         db = this.getWritableDatabase();

@@ -62,8 +62,8 @@ public class AdminHomePage extends AppCompatActivity {
         String oldName;
         switch(view.getId()){
             case R.id.createClass:
-                if(validInput((oldClassCode).toString(),(oldClassName).toString())){
-                    createCourse((oldClassCode).toString(),(oldClassName).toString());
+                if(validInput((oldClassCode).getText().toString(),(oldClassName).getText().toString())){
+                    createCourse((oldClassCode).getText().toString(),(oldClassName).getText().toString());
                 }
 
                 break;
@@ -81,7 +81,8 @@ public class AdminHomePage extends AppCompatActivity {
             case R.id.searchCourses:
                 oldcode = oldClassCode.getText().toString();
                 oldName = oldClassName.getText().toString();
-                if (validInput(oldcode, oldName)) {
+                if (validInput(oldcode, oldName) && db.courseExists(oldcode, oldName)) {
+                    errorMessage.setText("");
                     searchforUsers.setVisibility(View.GONE);
                     edtClass.setVisibility(View.VISIBLE);
                     deleteClass.setVisibility(View.VISIBLE);
