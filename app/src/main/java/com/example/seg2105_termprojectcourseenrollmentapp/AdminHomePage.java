@@ -53,7 +53,7 @@ public class AdminHomePage extends AppCompatActivity {
                 }
             case R.id.deleteClass:
                 if(validInput((newClassCode).toString(),(newClassName).toString())) {
-
+                    deleteCourse((newClassCode).toString(),(newClassName).toString());
                 }
             case R.id.editClass:
                 if(validInput((newClassCode).toString(),(newClassName).toString())){
@@ -75,7 +75,12 @@ public class AdminHomePage extends AppCompatActivity {
     private void editCourse(String classCode, String className){
 
     }
-
+    /**
+     *
+     * @param classCode The code of the class to be created by the admin
+     * @param className The name of the class to be created by the admin
+     * @return null
+     */
     private void createCourse(String classCode, String className){
         boolean x = db.addCourse(classCode,className);
         if(x == false) {
@@ -84,7 +89,9 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void deleteCourse(String classCode, String className){
-
+        if(validInput((newClassCode).toString(),(newClassName).toString())){
+            db.removeCourse((newClassCode).toString(),(newClassName).toString());
+        }
     }
 
     private void deleteUsers(String username){
