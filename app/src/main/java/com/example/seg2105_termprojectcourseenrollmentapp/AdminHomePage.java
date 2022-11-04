@@ -81,7 +81,6 @@ public class AdminHomePage extends AppCompatActivity {
             case R.id.searchCourses:
                 oldcode = oldClassCode.getText().toString();
                 oldName = oldClassName.getText().toString();
-                errorMessage.setText(db.courseExists(oldcode, oldName)+"");
                 if (validInput(oldcode, oldName)) {
                     searchforUsers.setVisibility(View.GONE);
                     edtClass.setVisibility(View.VISIBLE);
@@ -93,7 +92,7 @@ public class AdminHomePage extends AppCompatActivity {
                     newClassName.setVisibility(View.VISIBLE);
                 }
                 else {
-                    //errorMessage.setText("Class doesn't exist");
+                    errorMessage.setText("Class doesn't exist");
                     searchforUsers.setText("");
                     oldClassName.setText("");
                     oldClassCode.setText("");
@@ -117,6 +116,11 @@ public class AdminHomePage extends AppCompatActivity {
                     editCourse(newClassCode.getText().toString(), newClassName.getText().toString(), oldClassCode.getText().toString(), oldClassName.getText().toString());
                 }
 
+                break;
+            case R.id.deleteClass:
+                if (validInput(oldClassCode.getText().toString(), oldClassName.getText().toString())) {
+                    deleteCourse(oldClassCode.getText().toString(), oldClassName.getText().toString());
+                }
                 break;
  
         }
@@ -152,9 +156,7 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void deleteCourse(String classCode, String className){
-        if(validInput((newClassCode).toString(),(newClassName).toString())){
-            db.removeCourse((newClassCode).toString(),(newClassName).toString());
-        }
+        db.removeCourse(classCode, className);
     }
 
     private void deleteUsers(String username){
