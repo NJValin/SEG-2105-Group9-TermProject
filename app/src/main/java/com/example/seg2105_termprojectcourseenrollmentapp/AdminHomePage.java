@@ -19,13 +19,13 @@ import org.w3c.dom.Text;
 
 public class AdminHomePage extends AppCompatActivity {
 
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityHomePageBinding binding;
     private TextView wlcmAdminmessage, errorMessage;
     private Button createClass, deleteClass, edtClass, searchUsers, searchCourse, returnToHome;
     private EditText searchforUsers, oldClassCode, oldClassName, newClassCode, newClassName;
     private DBHelper db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
