@@ -176,7 +176,7 @@
                 android:backgroundTint="@color/grey"
                 android:maxLines="1"
                 android:inputType="text"
-                android:hint="Enter first name"
+                android:hint="Enter last name"
                 android:visibility="gone"
                 android:paddingVertical="20dp"
                 android:textColor="@color/white"

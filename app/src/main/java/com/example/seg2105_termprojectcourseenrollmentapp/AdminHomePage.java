@@ -81,7 +81,8 @@ public class AdminHomePage extends AppCompatActivity {
             case R.id.searchCourses:
                 oldcode = oldClassCode.getText().toString();
                 oldName = oldClassName.getText().toString();
-                if (validInput(oldcode, oldName)) {
+                errorMessage.setText(db.courseExists(oldcode, oldName)+"");
+                if (validInput(oldcode, oldName) && db.courseExists(oldcode, oldName)) {
                     errorMessage.setText("");
                     searchforUsers.setVisibility(view.GONE);
                     edtClass.setVisibility(view.VISIBLE);
@@ -91,6 +92,12 @@ public class AdminHomePage extends AppCompatActivity {
                     createClass.setVisibility(view.GONE);
                     newClassCode.setVisibility(view.VISIBLE);
                     newClassName.setVisibility(view.VISIBLE);
+                }
+                else {
+                    //errorMessage.setText("Class doesn't exist");
+                    searchforUsers.setText("");
+                    oldClassName.setText("");
+                    oldClassCode.setText("");
                 }
                 break;
             case R.id.returnToHome:
@@ -130,12 +137,15 @@ public class AdminHomePage extends AppCompatActivity {
      *
      * @param classCode The code of the class to be created by the admin
      * @param className The name of the class to be created by the admin
-     * @return null
      */
     private void createCourse(String classCode, String className){
         boolean x = db.addCourse(classCode,className);
         if(x == false) {
-            wlcmAdminmessage.setText("Cannot add course. Please check if course code / course name is already in use");
+            errorMessage.setText("Cannot add course. Please check if course code / course name is already in use");
+        }
+        else {
+            oldClassCode.setText("");
+            oldClassName.setText("");
         }
     }
 
@@ -149,10 +159,13 @@ public class AdminHomePage extends AppCompatActivity {
 
         if (db.userExists(searchforUsers.getText().toString())) {
             db.removeUser(username);
+            searchforUsers.setText("");
+            oldClassCode.setText("");
+            oldClassName.setText("");
         }
         else {
             errorMessage.setText("user doesn't exist");
-            searchUsers.setText("");
+            searchforUsers.setText("");
             oldClassCode.setText("");
             oldClassName.setText("");
         }
@@ -167,7 +180,7 @@ public class AdminHomePage extends AppCompatActivity {
     private boolean validInput(String input1){
         boolean returnValue = true;
         if (input1.equals("")) {
-            errorMessage.setText("Please enter a valid username or password");
+            errorMessage.setText("Please enter a valid input");
             searchforUsers.setText("");
             returnValue=false;
         }
@@ -184,7 +197,7 @@ public class AdminHomePage extends AppCompatActivity {
     private boolean validInput(String input1, String input2){
         boolean valReturn = true;
         if (input1.equals("")||input2.equals("")) {
-            errorMessage.setText("Please enter a valid username or password");
+            errorMessage.setText("Please enter a valid course code and name");
             oldClassCode.setText("");
             oldClassName.setText("");
             valReturn=false;

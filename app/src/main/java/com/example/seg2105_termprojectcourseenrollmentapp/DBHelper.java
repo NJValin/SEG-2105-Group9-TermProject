@@ -79,15 +79,31 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public boolean userExists(String username) {
+        db = this.getReadableDatabase();
         Cursor crsr= db.rawQuery("select userName from users where userName=?", new String[] {username});
         if (crsr.getCount()>0) {
+            crsr.close();
             return true;
         }
         else {
+            crsr.close();
+            return false;
+        }
+    }
+    public boolean courseExists(String crsCode, String crsName) {
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
+        if (c.getCount()>0) {
+            c.close();
+            return true;
+        }
+        else {
+            c.close();
             return false;
         }
     }
     public boolean removeUser(String username) {
+        db = this.getWritableDatabase();
         if (getUserType(username).equals("admin")) {
             return false;
         }
@@ -96,9 +112,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void removeCourse(String crsCode, String crsName) {
+        db = this.getWritableDatabase();
         db.execSQL("delete from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
     }
     public void editCourse(String newCrsCode, String oldCrsCode, String newCrsName, String oldCrsName) {
+        db = this.getWritableDatabase();
         db.execSQL("update courses set courseCode=? where courseName=?", new String[] {newCrsCode, oldCrsName});
         db.execSQL("update courses set courseName=? where courseCode=?", new String[] {newCrsName, oldCrsCode});
     }
