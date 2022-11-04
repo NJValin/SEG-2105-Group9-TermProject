@@ -21,9 +21,9 @@ public class AdminHomePage extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityHomePageBinding binding;
-    private TextView wlcmAdminmessage;
-    private Button createClass, deleteClass, edtClass, searchUsers;
-    private EditText searchforUsers, newClassCode, newClassName;
+    private TextView wlcmAdminmessage, errorMessage;
+    private Button createClass, deleteClass, edtClass, searchUsers, searchCourse, returnToHome;
+    private EditText searchforUsers, oldClassCode, oldClassName, newClassCode, newClassName;
     private DBHelper db;
 
 
@@ -37,8 +37,13 @@ public class AdminHomePage extends AppCompatActivity {
         edtClass = (Button) findViewById(R.id.editClass);
         searchUsers = (Button) findViewById(R.id.searchUsers);
         searchforUsers = (EditText) findViewById(R.id.searchBar);
-        newClassCode = (EditText) findViewById(R.id.newCourseCode);
-        newClassName = (EditText) findViewById(R.id.newNameBar);
+        oldClassCode = (EditText) findViewById(R.id.newCourseCode);
+        oldClassName = (EditText) findViewById(R.id.newNameBar);
+        newClassName = (EditText) findViewById(R.id.newName);
+        newClassCode = (EditText) findViewById(R.id.newCode);
+        errorMessage = (TextView) findViewById(R.id.errorCode);
+        searchCourse = (Button) findViewById(R.id.searchCourses);
+        returnToHome = (Button) findViewById(R.id.returnToHome);
         db = new DBHelper(this);
         Bundle extras = getIntent().getExtras();
         String[] name = db.getName(extras.getString("username"));
@@ -48,19 +53,21 @@ public class AdminHomePage extends AppCompatActivity {
     public void onClick(View view) {
         switch(view.getId()){
             case R.id.createClass:
-                if(validInput((newClassCode).toString(),(newClassName).toString())){
-                    createCourse((newClassCode).toString(),(newClassName).toString());
+                if(validInput((oldClassCode).toString(),(oldClassName).toString())){
+                    createCourse((oldClassCode).toString(),(oldClassName).toString());
                 }
-            case R.id.deleteClass:
-                if(validInput((newClassCode).toString(),(newClassName).toString())) {
+                break;
 
-                }
-            case R.id.editClass:
-                if(validInput((newClassCode).toString(),(newClassName).toString())){
-                    editCourse(newClassCode.toString(),newClassName.toString());
-                }
             case R.id.searchUsers:
-                
+                if (validInput(searchforUsers.getText().toString())) {
+                    deleteUsers(searchforUsers.getText().toString());
+                }
+                else {
+                    errorMessage.setText("");
+                    oldClassCode.setText("");
+                    oldClassName.setText("");
+                }
+                break;
         }
 
 
@@ -88,7 +95,15 @@ public class AdminHomePage extends AppCompatActivity {
     }
 
     private void deleteUsers(String username){
-
+        if (db.userExists(searchforUsers.getText().toString())) {
+            db.removeUser(username);
+        }
+        else {
+            errorMessage.setText("user doesn't exist");
+            searchUsers.setText("");
+            oldClassCode.setText("");
+            oldClassName.setText("");
+        }
     }
     /**
      *
@@ -117,8 +132,8 @@ public class AdminHomePage extends AppCompatActivity {
         boolean valReturn = true;
         if (input1.equals("")||input2.equals("")) {
             wlcmAdminmessage.setText("Please enter a valid username or password");
-            newClassCode.setText("");
-            newClassName.setText("");
+            oldClassCode.setText("");
+            oldClassName.setText("");
             valReturn=false;
         }
         return valReturn;
