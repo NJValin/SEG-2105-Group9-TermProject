@@ -129,8 +129,10 @@ public class AdminHomePage extends AppCompatActivity {
     private void createCourse(String classCode, String className){
         boolean x = db.addCourse(classCode,className);
         if(x == false) {
-            wlcmAdminmessage.setText("Cannot add course. Please check if course code / course name is already in use");
+            errorMessage.setText("Cannot add course. Please check if course code / course name is already in use");
         }
+        oldClassCode.setText("");
+        oldClassName.setText("");
     }
 
     private void deleteCourse(String classCode, String className){
