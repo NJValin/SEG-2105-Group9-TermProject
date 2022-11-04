@@ -48,9 +48,18 @@ public class AdminHomePage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String[] name = db.getName(extras.getString("username"));
         wlcmAdminmessage.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as admin");
+
+        createClass.setOnClickListener(this::onClick);
+        deleteClass.setOnClickListener(this::onClick);
+        edtClass.setOnClickListener(this::onClick);
+        searchUsers.setOnClickListener(this::onClick);
+        searchCourse.setOnClickListener(this::onClick);
+        returnToHome.setOnClickListener(this::onClick);
     }
 
     public void onClick(View view) {
+        String oldcode;
+        String oldName;
         switch(view.getId()){
             case R.id.createClass:
                 if(validInput((oldClassCode).toString(),(oldClassName).toString())){
@@ -68,6 +77,40 @@ public class AdminHomePage extends AppCompatActivity {
                     oldClassName.setText("");
                 }
                 break;
+            case R.id.searchCourses:
+                oldcode = oldClassCode.getText().toString();
+                oldName = oldClassName.getText().toString();
+                if (validInput(oldcode, oldName)) {
+                    errorMessage.setText("");
+                    searchforUsers.setVisibility(view.GONE);
+                    edtClass.setVisibility(view.VISIBLE);
+                    deleteClass.setVisibility(view.VISIBLE);
+                    returnToHome.setVisibility(view.VISIBLE);
+                    searchUsers.setVisibility(view.GONE);
+                    createClass.setVisibility(view.GONE);
+                    newClassCode.setVisibility(view.VISIBLE);
+                    newClassName.setVisibility(view.VISIBLE);
+                }
+                break;
+            case R.id.returnToHome:
+                searchforUsers.setVisibility(view.VISIBLE);
+                searchUsers.setVisibility(view.VISIBLE);
+                createClass.setVisibility(view.VISIBLE);
+                edtClass.setVisibility(view.GONE);
+                deleteClass.setVisibility(view.GONE);
+                returnToHome.setVisibility(view.GONE);
+                newClassCode.setVisibility(view.GONE);
+                newClassName.setVisibility(view.GONE);
+                oldClassName.setText("");
+                oldClassCode.setText("");
+                break;
+            case R.id.editClass:
+                if (validInput(newClassCode.getText().toString(), newClassName.getText().toString())) {
+                    editCourse(newClassCode.getText().toString(), newClassName.getText().toString(), oldClassCode.getText().toString(), oldClassName.getText().toString());
+                }
+
+                break;
+            case R.id.deleteClass:
         }
 
 
@@ -79,8 +122,8 @@ public class AdminHomePage extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    private void editCourse(String classCode, String className){
-
+    private void editCourse(String classCode, String className, String oldCode, String oldName){
+        db.editCourse(classCode, className, oldCode, oldName);
     }
 
     private void createCourse(String classCode, String className){
@@ -114,7 +157,7 @@ public class AdminHomePage extends AppCompatActivity {
     private boolean validInput(String input1){
         boolean returnValue = true;
         if (input1.equals("")) {
-            wlcmAdminmessage.setText("Please enter a valid username or password");
+            errorMessage.setText("Please enter a valid username or password");
             searchforUsers.setText("");
             returnValue=false;
         }
@@ -131,7 +174,7 @@ public class AdminHomePage extends AppCompatActivity {
     private boolean validInput(String input1, String input2){
         boolean valReturn = true;
         if (input1.equals("")||input2.equals("")) {
-            wlcmAdminmessage.setText("Please enter a valid username or password");
+            errorMessage.setText("Please enter a valid username or password");
             oldClassCode.setText("");
             oldClassName.setText("");
             valReturn=false;

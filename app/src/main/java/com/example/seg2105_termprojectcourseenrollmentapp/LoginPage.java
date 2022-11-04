@@ -149,7 +149,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             this.password.setText("");
         }
         else {
-            //errorMessage.setText("Not yet implemented");
+            errorMessage.setText("Not yet implemented");
             userName.setText("");
             this.password.setText("");
         }
