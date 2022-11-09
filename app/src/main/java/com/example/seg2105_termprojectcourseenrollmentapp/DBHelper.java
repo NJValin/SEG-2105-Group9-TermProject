@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 /**
  * @author Neil Valin
  */
@@ -21,7 +23,8 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
-        db.execSQL("create Table courses(courseCode Text primary key, courseName Text, courseDays Text)");
+        db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+                " instructorName Text, description Text, capacity Integer)");
     }
 
     /**
@@ -67,6 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      *
      * @param crsCode
+     * @param crsName
      * @return
      */
     public boolean addCourse(String crsCode, String crsName) {
@@ -74,10 +78,46 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues cntntVal = new ContentValues();
         cntntVal.put("courseCode", crsCode);
         cntntVal.put("courseName", crsName);
+        cntntVal.put("firstDay", "N/A");
+        cntntVal.put("firstDayTime", "N/A");
+        cntntVal.put("secondDay", "N/A");
+        cntntVal.put("secondDayTime", "N/A");
+        cntntVal.put("instructorName", "N/A");
+        cntntVal.put("description", "N/A");
+        cntntVal.put("capacity", 0);
         long result = db.insert("courses", null, cntntVal);//returns -1 if insertion isn't successful
+
         return result!=-1;
     }
-
+    public void setCourseDay(String crsName, String crsCode, String dayOne, String dayTwo) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set firstDay=? and secondDay=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {dayOne, dayTwo});
+        db.close();
+    }
+    public void setCourseTime(String crsName, String crsCode, String timeOne, String timeTwo) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set firstDayTime=? and secondDayTime=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {timeOne, timeTwo});
+        db.close();
+    }
+    public void setDescription(String crsName, String crsCode, String description) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set description=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {description});
+        db.close();
+    }
+    public void setStudentLimit(String crsName, String crsCode, int limit) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set capacity=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {limit});
+        db.close();
+    }
+    public String[] courseList() {
+        ArrayList<String> x = new ArrayList<>();
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from courses", null);
+        while(c.moveToNext()) {
+            x.add(c.getColumnName(0)+": "+c.getColumnName(1));
+        }
+        return (String[])x.toArray();
+    }
     public boolean userExists(String username) {
         Cursor crsr= db.rawQuery("select userName from users where userName=?", new String[] {username});
         if (crsr.getCount()>0) {
