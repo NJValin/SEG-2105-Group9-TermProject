@@ -121,9 +121,27 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean userExists(String username) {
         Cursor crsr= db.rawQuery("select userName from users where userName=?", new String[] {username});
         if (crsr.getCount()>0) {
+            crsr.close();
+            db.close();
             return true;
         }
         else {
+            crsr.close();
+            db.close();
+            return false;
+        }
+    }
+    public boolean courseExists(String crsCode, String crsName) {
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode,crsName});
+        if (c.getCount()>0) {
+            c.close();
+            db.close();
+            return true;
+        }
+        else {
+            c.close();
+            db.close();
             return false;
         }
     }
