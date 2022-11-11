@@ -66,7 +66,32 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+    //                " instructorName Text, description Text, capacity Integer)");
+    //    }
+    public String getCourse (String crsCode, String crsName) {
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
+        if (c.moveToFirst()) {
+            return c.getString(0)+": "+c.getString(1);
+        }
+        else {
+            return "";
+        }
+    }
+    public String getUser(String username) {
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from users where userName=?", new String[] {username});
+        if (c.moveToFirst()) {
 
+            return c.getString(0)+": "+c.getString(3)+" "+c.getString(4)+" | "+c.getString(2);
+        }
+        else {
+            c.close();
+
+            return "";
+        }
+    }
     /**
      *
      * @param crsCode
@@ -92,42 +117,60 @@ public class DBHelper extends SQLiteOpenHelper {
     public void setCourseDay(String crsName, String crsCode, String dayOne, String dayTwo) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set firstDay=? and secondDay=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {dayOne, dayTwo});
-        db.close();
     }
     public void setCourseTime(String crsName, String crsCode, String timeOne, String timeTwo) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set firstDayTime=? and secondDayTime=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {timeOne, timeTwo});
-        db.close();
     }
     public void setDescription(String crsName, String crsCode, String description) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set description=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {description});
-        db.close();
     }
     public void setStudentLimit(String crsName, String crsCode, int limit) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set capacity=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {limit+""});
-        db.close();
+
+    }
+
+    public String[] userList() {
+        ArrayList<String> x = new ArrayList<>();
+        db=this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from users", null);
+        while(c.moveToNext()) {
+            x.add(c.getString(0)+": "+c.getString(3)+" "+c.getString(4)+" | "+c.getString(2));
+        }
+        String[] toReturn = new String[x.size()];
+        int i =0;
+        for (String q:x) {
+            toReturn[i]=q;
+            i++;
+        }
+        return toReturn;
     }
     public String[] courseList() {
         ArrayList<String> x = new ArrayList<>();
         db = this.getWritableDatabase();
         Cursor c = db.rawQuery("select * from courses", null);
-        while(c.moveToNext()) {
-            x.add(c.getColumnName(0)+": "+c.getColumnName(1));
+        if (c.getCount()==0) {
+            return new String[] {""};
         }
-        return (String[])x.toArray();
+        while(c.moveToNext()) {
+            x.add(c.getString(0)+": "+c.getString(1));
+        }
+
+        return x.toArray(new String[0]);
     }
     public boolean userExists(String username) {
         Cursor crsr= db.rawQuery("select userName from users where userName=?", new String[] {username});
         if (crsr.getCount()>0) {
             crsr.close();
-            db.close();
+
+
             return true;
         }
         else {
             crsr.close();
-            db.close();
+
             return false;
         }
     }
@@ -136,30 +179,36 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode,crsName});
         if (c.getCount()>0) {
             c.close();
-            db.close();
+
             return true;
         }
         else {
             c.close();
-            db.close();
             return false;
         }
     }
     public boolean removeUser(String username) {
-        if (getUserType(username).equals("admin")) {
+        db = this.getWritableDatabase();
+        String userType = getUserType(username);
+        if (userType.equals("admin")|| userType.equals("null")) {
             return false;
         }
+
         db.execSQL("delete from users where userName=?", new String[] {username});
+
         return true;
     }
 
     public void removeCourse(String crsCode, String crsName) {
         db.execSQL("delete from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
+
     }
     public void editCourse(String newCrsCode, String oldCrsCode, String newCrsName, String oldCrsName) {
         db.execSQL("update courses set courseCode=? where courseName=?", new String[] {newCrsCode, oldCrsName});
-        db.execSQL("update courses set courseName=? where courseCode=?", new String[] {newCrsName, oldCrsCode});
+        db.execSQL("update courses set courseName=? where courseCode=?", new String[] {newCrsName, newCrsCode});
+
     }
+
     /**
      *
      * @param username the username provided by the user.
@@ -174,16 +223,17 @@ public class DBHelper extends SQLiteOpenHelper {
             toReturn = true;
         }
         crsr.close();
+
         return toReturn;
     }
     public String getUserType(String username) {
         db=this.getReadableDatabase();
         Cursor crsr = db.rawQuery("select * from users where userName = ?", new String[] {username});
-        if (crsr.moveToNext()) {
+        if (crsr.moveToFirst()) {
             return crsr.getString(2);
         }
         else {
-            db.close();
+
             crsr.close();
             return "null";
         }
@@ -192,19 +242,27 @@ public class DBHelper extends SQLiteOpenHelper {
         db = this.getWritableDatabase();
         Cursor crsr = db.rawQuery("select * from users where userName = ?", new String[] {username});
         String[] x = new String[2];
-        if (crsr.moveToNext()) {
+        if (crsr.moveToFirst()) {
+
             return new String[] {crsr.getString(3), crsr.getString(4)};
         }
         else {
+
             return new String[] {"", ""};
         }
 
     }
-    public void deleteAllUsers() {
+    public  void deleteAllUsers() {
         db = this.getWritableDatabase();
         db.execSQL("drop table users");
         db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
-        db.close();
+
+    }
+    public void deleteAllCourses() {
+        db = this.getWritableDatabase();
+        db.execSQL("drop table courses");
+        db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+                " instructorName Text, description Text, capacity Integer)");
     }
 
 
