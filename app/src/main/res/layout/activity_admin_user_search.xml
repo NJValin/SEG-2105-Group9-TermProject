@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:background="@color/grey"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminUserSearch">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/returnToHome"
+            android:layout_width="100pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/garnet"
+            android:text="Return to Home"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/confirmDelete"
+            android:layout_width="100pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/garnet"
+            android:clickable="false"
+            android:elegantTextHeight="true"
+            android:text="delete user"
+            android:textColor="@color/white"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/returnToHome" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="30pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/grey"
+            android:text="@string/search"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@id/errorMessage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/userNameToSearch"
+            app:layout_constraintTop_toBottomOf="@+id/confirmDelete" />
+
+        <ListView
+            android:id="@+id/listOfUsers"
+            android:layout_width="match_parent"
+            android:layout_height="501dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorMessage" />
+
+        <EditText
+            android:id="@+id/userNameToSearch"
+            android:layout_width="130pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/white"
+            android:hint="Username"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/errorMessage"
+            app:layout_constraintRight_toLeftOf="@id/searchBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/confirmDelete" />
+
+        <TextView
+            android:id="@+id/errorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="@color/garnet"
+            app:layout_constraintBottom_toTopOf="@id/listOfUsers"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userNameToSearch" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

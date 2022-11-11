@@ -28,8 +28,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         studentBtn = (Button) findViewById(R.id.studentBtn);
         firstname = (EditText) findViewById(R.id.firstName);
         lastname = (EditText) findViewById(R.id.lastName);
-
-        db = new DBHelper(this);
+        db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
 
         signIn.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -141,17 +140,29 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         if (userType.equals("admin")) {
             Intent i = new Intent(this, AdminHomePage.class);
             i.putExtra("username", userName.getText().toString());
+            userName.setText("");
+            this.password.setText("");
+            firstname.setText("");
+            lastname.setText("");
             startActivity(i);
         }
         else if (userType.equals("student")) {
             errorMessage.setText("Not yet implemented");
+            firstname.setVisibility(View.GONE);
+            lastname.setVisibility(View.GONE);
             userName.setText("");
             this.password.setText("");
+            firstname.setText("");
+            lastname.setText("");
         }
         else {
             errorMessage.setText("Not yet implemented");
             userName.setText("");
+            firstname.setVisibility(View.GONE);
+            lastname.setVisibility(View.GONE);
             this.password.setText("");
+            firstname.setText("");
+            lastname.setText("");
         }
     }
 }
