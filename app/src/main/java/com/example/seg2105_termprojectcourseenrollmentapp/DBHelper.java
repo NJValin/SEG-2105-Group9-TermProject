@@ -117,17 +117,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void setCourseDay(String crsName, String crsCode, String dayOne, String dayTwo) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set firstDay=? and secondDay=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {dayOne, dayTwo});
-
     }
     public void setCourseTime(String crsName, String crsCode, String timeOne, String timeTwo) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set firstDayTime=? and secondDayTime=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {timeOne, timeTwo});
-
     }
     public void setDescription(String crsName, String crsCode, String description) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set description=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {description});
-
     }
     public void setStudentLimit(String crsName, String crsCode, int limit) {
         db = this.getWritableDatabase();
@@ -168,6 +165,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (crsr.getCount()>0) {
             crsr.close();
 
+
             return true;
         }
         else {
@@ -186,7 +184,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         else {
             c.close();
-
             return false;
         }
     }

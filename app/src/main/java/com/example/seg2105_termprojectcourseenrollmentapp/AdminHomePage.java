@@ -21,12 +21,12 @@ import org.w3c.dom.Text;
 
 public class AdminHomePage extends AppCompatActivity {
 
+
     private AppBarConfiguration appBarConfiguration;
     private ActivityHomePageBinding binding;
     private TextView wlcmAdminmessage, instruction;
     private Button toUsers, toCourses;
     private DBHelper db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +56,14 @@ public class AdminHomePage extends AppCompatActivity {
         String oldcode;
         String oldName;
         switch(view.getId()){
+
             case R.id.coursesButtons:
                 toCourseCreate();
                 break;
             case R.id.usersButton:
                 toUsersSearch();
                 break;
+
         }
 
 
@@ -72,5 +74,6 @@ public class AdminHomePage extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 
 }
