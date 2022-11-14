@@ -66,9 +66,7 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
-    //                " instructorName Text, description Text, capacity Integer)");
-    //    }
+
     public String getCourse (String crsCode, String crsName) {
         db = this.getWritableDatabase();
         Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
@@ -158,6 +156,22 @@ public class DBHelper extends SQLiteOpenHelper {
             x.add(c.getString(0)+": "+c.getString(1));
         }
 
+        return x.toArray(new String[0]);
+    }
+    //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+    //                " instructorName Text, description Text, capacity Integer)");
+    //    }
+    public String[] courseListForInstructor() {
+        ArrayList<String> x = new ArrayList<>();
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from courses", null);
+        if (c.getCount()==0) {
+            return new String[] {""};
+        }
+        while (c.moveToNext()) {
+            x.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
+            +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8));
+        }
         return x.toArray(new String[0]);
     }
     public boolean userExists(String username) {
