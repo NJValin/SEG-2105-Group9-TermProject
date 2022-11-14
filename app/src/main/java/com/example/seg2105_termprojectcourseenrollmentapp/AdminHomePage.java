@@ -23,7 +23,7 @@ public class AdminHomePage extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityHomePageBinding binding;
-    private TextView wlcmAdminmessage, instruction;
+    private TextView wlcmAdminmessage;
     private Button toUsers, toCourses;
     private DBHelper db;
 
@@ -33,7 +33,6 @@ public class AdminHomePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         wlcmAdminmessage = (TextView) findViewById(R.id.welcomeAdmin);
-        instruction = (TextView) findViewById(R.id.instruction);
         toUsers = (Button) findViewById(R.id.usersButton);
         toCourses = (Button) findViewById(R.id.coursesButtons);
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());

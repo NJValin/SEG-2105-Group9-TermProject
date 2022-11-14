@@ -164,6 +164,9 @@ public class AdminCourseEdit extends AppCompatActivity {
     private boolean validateInput() {
         String x = code.getText().toString();
         String y = name.getText().toString();
+        if (x.contains(":") || y.contains(":")) {
+            return false;
+        }
         if (x.equals("")||y.equals("")) {
             return false;
         }
