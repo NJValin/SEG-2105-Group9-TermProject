@@ -20,51 +20,26 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.047"
         tools:layout_editor_absoluteX="-16dp" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5pt"
-        android:id="@+id/instruction"
-        android:textColor="@color/white"
-        android:text="Press one of the buttons"
-        android:textSize="20dp"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/welcomeInstructor"
-        app:layout_constraintBottom_toTopOf="@id/studentsButton"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
 
     <Button
 
-        android:id="@+id/studentsButton"
+        android:id="@+id/courseButton"
         android:layout_width="160pt"
         android:layout_height="30pt"
         android:backgroundTint="@color/garnet"
-        android:text="Students"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toTopOf="@id/assistTeachButton"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/instruction" />
-
-    <Button
-        android:id="@+id/assistTeachButton"
-        android:layout_width="160pt"
-        android:layout_height="30pt"
-        android:backgroundTint="@color/garnet"
-        android:text="Teaching Assistants"
+        android:text="Edit Courses"
         android:textColor="@color/white"
         android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/studentsButton"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintTop_toBottomOf="@id/welcomeInstructor"/>
+
     <ListView
+        android:id="@+id/courseList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/courseList"
-        />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
