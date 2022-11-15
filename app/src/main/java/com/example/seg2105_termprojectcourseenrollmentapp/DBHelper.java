@@ -174,6 +174,20 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return x.toArray(new String[0]);
     }
+
+    public String[] courseListOfTeacher(String[] name) {
+        ArrayList<String> x = new ArrayList<>();
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from courses where instructorName=?", new String[] {name[0]+" "+name[1]});
+        if (c.getCount()==0) {
+            return new String[] {""};
+        }
+        while (c.moveToNext()) {
+            x.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
+                    +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8));
+        }
+        return x.toArray(new String[0]);
+    }
     public boolean userExists(String username) {
         Cursor crsr= db.rawQuery("select userName from users where userName=?", new String[] {username});
         if (crsr.getCount()>0) {
