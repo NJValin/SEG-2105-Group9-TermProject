@@ -12,24 +12,27 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="19dp"
+            android:id="@+id/errorMsg"
             android:textColor="@color/garnet"
             android:textSize="16dp"
             android:textAlignment="center"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/courseList"
+            app:layout_constraintBottom_toTopOf="@id/courseList"/>
+
         <TimePicker
+            android:id="@+id/timePick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/timePick"
-            android:visibility="invisible"
-            android:clickable="false"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:background="@color/grey"
+            android:clickable="false"
             android:headerBackground="@color/garnet"
-            android:numbersSelectorColor="@color/garnet" />
+            android:numbersSelectorColor="@color/garnet"
+            android:visibility="invisible"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ListView
             android:layout_width="410dp"
@@ -40,5 +43,142 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/timePick"
             />
+
+        <Button
+            android:id="@+id/setDay"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:layout_marginTop="46dp"
+            android:backgroundTint="@color/garnet"
+            android:text="Set Day"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/studentLimitBtn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/studentLimitBtn"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:layout_marginTop="46dp"
+            android:backgroundTint="@color/garnet"
+            android:text="Set Student Limit"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toRightOf="@id/setDay"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:layout_width="160pt"
+            android:layout_height="30pt"
+            android:id="@+id/setDescription"
+            android:backgroundTint="@color/garnet"
+            android:textColor="@color/white"
+            android:text="SetDescription"
+            app:layout_constraintTop_toBottomOf="@id/setDay"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            />
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="40pt"
+            android:layout_height="20pt"
+            android:layout_marginLeft="15dp"
+            android:text="Back"
+            android:textColor="@color/white"
+            android:textSize="6pt"
+            android:backgroundTint="@color/garnet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:backgroundTint="@color/white"
+            android:id="@+id/studentLimitTextBox"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/confirmStudentLimit"
+            android:hint = "Capacity"
+            android:visibility="invisible"
+            android:inputType="number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/confirmStudentLimit"
+            android:layout_width="80pt"
+            android:layout_height="13pt"
+            android:backgroundTint="@color/garnet"
+            android:text="Confirm"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/errorMsg"
+            app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:id="@+id/descriptionTextBox"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/confirmDescription"
+            android:hint="Enter Description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLength="2000"
+            android:maxLines="4"
+            />
+        <Button
+            android:id="@+id/confirmDescription"
+            android:layout_width="80pt"
+            android:layout_height="13pt"
+            android:backgroundTint="@color/garnet"
+            android:text="Confirm"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/errorMsg"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/dayone"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/white"
+            android:hint="Day One"
+            android:inputType="datetime"
+            app:layout_constraintBottom_toTopOf="@id/confirmDay"
+            app:layout_constraintRight_toLeftOf="@id/daytwo"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/daytwo"
+            android:layout_width="80pt"
+            android:layout_height="30pt"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@color/white"
+            android:hint="Day Two"
+            android:inputType="datetime"
+            app:layout_constraintBottom_toTopOf="@id/confirmDay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/dayone" />
+
+        <Button
+            android:id="@+id/confirmDay"
+            android:layout_width="80pt"
+            android:layout_height="13pt"
+            android:backgroundTint="@color/garnet"
+            android:text="Confirm"
+            android:visibility="invisible"
+            android:textColor="@color/white"
+            android:textSize="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/errorMsg"
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
