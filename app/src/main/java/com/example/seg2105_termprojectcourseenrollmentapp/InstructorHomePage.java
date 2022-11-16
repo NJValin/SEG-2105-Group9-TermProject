@@ -52,6 +52,8 @@ public class InstructorHomePage extends AppCompatActivity {
         courseList = (ListView) findViewById(R.id.courseList);
         errorMsg = (TextView) findViewById(R.id.errorMessage);
         courses = new ArrayList<>();
+        String code;
+        String crsname;
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
         Bundle extras = getIntent().getExtras();
         name = db.getName(extras.getString("username"));
@@ -67,8 +69,8 @@ public class InstructorHomePage extends AppCompatActivity {
                     return;
                 }
                 String code = o.toString().split(": ")[0];
-                String name = o.toString().split(": ")[1];
-                selectCourse(code, name, o);
+                String crsname = o.toString().split(": ")[1];
+                selectCourse(code, crsname, o);
             }
         });
         displayCourses();
@@ -90,7 +92,8 @@ public class InstructorHomePage extends AppCompatActivity {
         courseList.setAdapter(adapter);
     }
     //format the teachers name like firstname+" "+lastname, the courseListOfTeacher() method depends on it
-    private void teachCourse() {
+    private void teachCourse(String code, String crsname) {
+        db.setInstructor(crsname, code, name);
     }
     public void onClick(View view) {
         switch (view.getId()) {
@@ -98,11 +101,13 @@ public class InstructorHomePage extends AppCompatActivity {
                 String[] x = db.courseListOfTeacher(name);
                 if (x.length==1&&x[0].equals("")) {
                     errorMsg.setText("You don't teach any classes at this time.");
+                    teachCourse.setVisibility(View.INVISIBLE);
                     displayCourses();
 
                 }
                 break;
-
+            case R.id.teachCourse:
+                break;
         }
     }
 
