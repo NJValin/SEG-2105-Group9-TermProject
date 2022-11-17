@@ -77,6 +77,9 @@ public class InstructorHomePage extends AppCompatActivity {
     }
     private void selectCourse(String code, String name, Object o) {
         teachCourse.setVisibility(View.VISIBLE);
+        teachCourse.setClickable(true);
+        crsName.setText(name);
+        crsCode.setText(code);
         courses.clear();
         courses.add(o.toString());
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courses);
@@ -92,8 +95,12 @@ public class InstructorHomePage extends AppCompatActivity {
         courseList.setAdapter(adapter);
     }
     //format the teachers name like firstname+" "+lastname, the courseListOfTeacher() method depends on it
-    private void teachCourse(String code, String crsname) {
+    private void courseTeacher(String code, String crsname) {
         db.setInstructor(crsname, code, name);
+    }
+    private void toCourseEdit(){
+        Intent w = new Intent(this, InstructorCourseEdit.class);
+        startActivity(w);
     }
     public void onClick(View view) {
         switch (view.getId()) {
@@ -103,11 +110,37 @@ public class InstructorHomePage extends AppCompatActivity {
                     errorMsg.setText("You don't teach any classes at this time.");
                     teachCourse.setVisibility(View.INVISIBLE);
                     displayCourses();
-
+                }
+                else{
+                    toCourseEdit();
                 }
                 break;
             case R.id.teachCourse:
+                courseTeacher(crsName.getText().toString(),crsCode.getText().toString());
                 break;
+            case R.id.searchButton:
+                String courseName = crsName.getText().toString();
+                String courseCode = crsCode.getText().toString();
+                boolean exists = db.courseExists(courseCode,courseName);
+                if (courseCode.equals("")||courseName.equals("")) {
+                    crsName.setText("");
+                    crsCode.setText("");
+                    displayCourses();
+                    errorMsg.setText("Invalid Course code/name");
+                }
+                else if (exists) {
+                    courses.clear();
+                    courses.add(db.getCourse(courseCode,courseName));
+                    errorMsg.setText("");
+                    adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
+                    courseList.setAdapter(adapter);
+                }
+                else {
+                    crsName.setText("");
+                    crsCode.setText("");
+                    displayCourses();
+                    errorMsg.setText("Invalid Course code/name");
+                }
         }
     }
 

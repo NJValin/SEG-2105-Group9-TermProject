@@ -29,7 +29,7 @@
         android:layout_width="160pt"
         android:layout_height="20pt"
         android:backgroundTint="@color/garnet"
-        android:text="Courses That I teach"
+        android:text="My Courses"
         android:textColor="@color/white"
         android:textSize="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
