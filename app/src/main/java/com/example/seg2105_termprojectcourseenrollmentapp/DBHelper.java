@@ -113,6 +113,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return result!=-1;
     }
+    public void resetCourse(String crsC, String crsN) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set firstDay=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("update courses set secondDay=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("update courses set instructorName = ? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("update courses set firstDayTime=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("update courses set secondDayTime=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("update courses set description=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("update courses set capacity=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+    }
     public void setCourseDayOne(String crsName, String crsCode, String dayOne) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set firstDay=? where courseCode=? and courseName=?", new String[] {dayOne, crsCode, crsName});

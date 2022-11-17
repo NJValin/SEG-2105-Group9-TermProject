@@ -155,6 +155,7 @@ public class InstructorHomePage extends AppCompatActivity {
                         if (temp.size()!=0) {
                             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
                             courseList.setAdapter(adapter);
+                            errorMsg.setText("");
                         }
                         else {
                             crsName.setText("");
@@ -168,6 +169,7 @@ public class InstructorHomePage extends AppCompatActivity {
                         if (temp.size()!=0) {
                             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
                             courseList.setAdapter(adapter);
+                            errorMsg.setText("");
                         }
                         else {
                             crsName.setText("");
@@ -181,6 +183,7 @@ public class InstructorHomePage extends AppCompatActivity {
                             temp  =db.searchCourse(courseCode, courseName);
                             adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
                             courseList.setAdapter(adapter);
+                            errorMsg.setText("");
                         }
                         else {
                             crsName.setText("");
