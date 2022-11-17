@@ -219,31 +219,60 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     errorMsg.setText("Enter all fields ");
                 }
                 else {
+                    int x = Integer.parseInt(dayonetime.getText().toString().split(":")[0]);
+                    int x2= Integer.parseInt(dayonetime.getText().toString().split(":")[1]);
+                    int y = Integer.parseInt(daytwotime.getText().toString().split(":")[0]);
+                    int y2 = Integer.parseInt(daytwotime.getText().toString().split(":")[1]);
 
-                    db.setCourseDayOne(crsName, code, dayone.getSelectedItem().toString());
-                    db.setCourseDaytwo(crsName, code, daytwo.getSelectedItem().toString());
-                    db.setCourseTimeOne(crsName, code, dayonetime.getText().toString());
-                    db.setCourseTimeTwo(crsName, code, daytwotime.getText().toString());
-                    setDay.setVisibility(View.INVISIBLE);
-                    studentLimit.setVisibility(View.INVISIBLE);
-                    setDescription.setVisibility(View.INVISIBLE);
-                    backButton.setVisibility(View.INVISIBLE);
-                    cnfrmDay.setVisibility(View.INVISIBLE);
-                    cnfrmStdLim.setVisibility(View.INVISIBLE);
-                    cnfrmDesc.setVisibility(View.INVISIBLE);
-                    stdLimit.setVisibility(View.INVISIBLE);
-                    description.setVisibility(View.INVISIBLE);
-                    dayone.setVisibility(View.INVISIBLE);
-                    daytwo.setVisibility(View.INVISIBLE);
-                    daytwotime.setVisibility(View.INVISIBLE);
-                    dayonetime.setVisibility(View.INVISIBLE);
-                    dropCrs.setVisibility(View.INVISIBLE);
-                    errorMsg.setText("");
-                    dayOne = "";
-                    dayTwo = "";
-                    code = "";
-                    crsName = "";
-                    displayCourses();
+                    if ((x>24||x2>59)||(y>24||y2>59)) {
+                        errorMsg.setText("Invalid times");
+                        setDay.setVisibility(View.INVISIBLE);
+                        studentLimit.setVisibility(View.INVISIBLE);
+                        setDescription.setVisibility(View.INVISIBLE);
+                        backButton.setVisibility(View.INVISIBLE);
+                        cnfrmDay.setVisibility(View.INVISIBLE);
+                        cnfrmStdLim.setVisibility(View.INVISIBLE);
+                        cnfrmDesc.setVisibility(View.INVISIBLE);
+                        stdLimit.setVisibility(View.INVISIBLE);
+                        description.setVisibility(View.INVISIBLE);
+                        dayone.setVisibility(View.INVISIBLE);
+                        daytwo.setVisibility(View.INVISIBLE);
+                        daytwotime.setVisibility(View.INVISIBLE);
+                        dayonetime.setVisibility(View.INVISIBLE);
+                        dropCrs.setVisibility(View.INVISIBLE);
+                        dayOne = "";
+                        dayTwo = "";
+                        code = "";
+                        crsName = "";
+                        displayCourses();
+                    }
+                    else {
+                        db.setCourseDayOne(crsName, code, dayone.getSelectedItem().toString());
+                        db.setCourseDaytwo(crsName, code, daytwo.getSelectedItem().toString());
+                        db.setCourseTimeOne(crsName, code, dayonetime.getText().toString());
+                        db.setCourseTimeTwo(crsName, code, daytwotime.getText().toString());
+                        setDay.setVisibility(View.INVISIBLE);
+                        studentLimit.setVisibility(View.INVISIBLE);
+                        setDescription.setVisibility(View.INVISIBLE);
+                        backButton.setVisibility(View.INVISIBLE);
+                        cnfrmDay.setVisibility(View.INVISIBLE);
+                        cnfrmStdLim.setVisibility(View.INVISIBLE);
+                        cnfrmDesc.setVisibility(View.INVISIBLE);
+                        stdLimit.setVisibility(View.INVISIBLE);
+                        description.setVisibility(View.INVISIBLE);
+                        dayone.setVisibility(View.INVISIBLE);
+                        daytwo.setVisibility(View.INVISIBLE);
+                        daytwotime.setVisibility(View.INVISIBLE);
+                        dayonetime.setVisibility(View.INVISIBLE);
+                        dropCrs.setVisibility(View.INVISIBLE);
+                        errorMsg.setText("");
+                        dayOne = "";
+                        dayTwo = "";
+                        code = "";
+                        crsName = "";
+                        displayCourses();
+                    }
+
                 }
                 break;
             case R.id.dropCourse:
