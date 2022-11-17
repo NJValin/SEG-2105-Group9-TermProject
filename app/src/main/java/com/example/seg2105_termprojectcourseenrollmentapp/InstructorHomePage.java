@@ -141,26 +141,59 @@ public class InstructorHomePage extends AppCompatActivity {
                 String courseCode = crsCode.getText().toString();
                 boolean exists = db.courseExists(courseCode,courseName);
 
-                errorMsg.setText(""+exists);
-                if (courseCode.equals("")||courseName.equals("")) {
+                if (courseCode.equals("")&&courseName.equals("")) {
+
                     crsName.setText("");
                     crsCode.setText("");
                     displayCourses();
                     errorMsg.setText("Invalid Course code/name");
-                }
-                else if (exists) {
-                    courses.clear();
-                    courses.add(db.getCourse(courseCode,courseName));
-                    errorMsg.setText("");
-                    adapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1);
-                    courseList.setAdapter(adapter);
                 }
                 else {
-                    crsName.setText("");
-                    crsCode.setText("");
-                    displayCourses();
-                    errorMsg.setText("Invalid Course code/name");
+                    ArrayList<String> temp;
+                    if (!courseCode.equals("")&&courseName.equals("")) {
+                        temp = db.searchCourseByCode(courseCode);
+                        if (temp.size()!=0) {
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courseList.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsName.setText("");
+                            crsCode.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                    else if (courseCode.equals("")&&!courseName.equals("")) {
+                        temp  = db.searchCourseByName(courseName);
+                        if (temp.size()!=0) {
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courseList.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsName.setText("");
+                            crsCode.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                    else {
+                        if (exists) {
+                            temp  =db.searchCourse(courseCode, courseName);
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courseList.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsName.setText("");
+                            crsCode.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
                 }
+
         }
     }
 

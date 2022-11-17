@@ -13,16 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SEG2105_TermProjectCourseEnrollmentApp"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+
         <activity
             android:name=".InstructorCourseEdit"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -52,7 +47,8 @@
         </activity>
         <activity
             android:name=".AdminUserSearch"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -61,7 +57,8 @@
             android:name=".AdminHomePage"
             android:exported="false"
             android:label="@string/title_activity_home_page"
-            android:theme="@style/Theme.SEG2105_TermProjectCourseEnrollmentApp.NoActionBar">
+            android:theme="@style/Theme.SEG2105_TermProjectCourseEnrollmentApp.NoActionBar"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
