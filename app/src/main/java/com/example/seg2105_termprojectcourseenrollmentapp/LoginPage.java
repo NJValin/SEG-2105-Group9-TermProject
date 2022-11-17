@@ -28,7 +28,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         studentBtn = (Button) findViewById(R.id.studentBtn);
         firstname = (EditText) findViewById(R.id.firstName);
         lastname = (EditText) findViewById(R.id.lastName);
-        db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
+        db = new DBHelper((CourseEnrollmentApp)getApplicationContext()) ;
 
         signIn.setOnClickListener(this);
         register.setOnClickListener(this);
@@ -117,7 +117,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         }
 
     }
-    private boolean isValidInput(String username, String password) {
+    public boolean isValidInput(String username, String password) {
         boolean toReturn = true;
         if (username.equals("")||password.equals("")) {
             errorMessage.setText("Please enter a valid username or password");
@@ -127,11 +127,11 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
         }
         return toReturn;
     }
-    private boolean register(String username, String password, String userType, String firstName, String lastName) {
+    public boolean register(String username, String password, String userType, String firstName, String lastName) {
         boolean x = db.addUsers(username, password, userType, firstName, lastName);
         return x;
     }
-    private boolean signIn(String username, String password) {
+    public boolean signIn(String username, String password) {
         boolean x = db.checkLogin(username, password);
         return x;
     }

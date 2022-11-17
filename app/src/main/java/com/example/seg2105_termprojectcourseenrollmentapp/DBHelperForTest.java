@@ -1,19 +1,16 @@
 package com.example.seg2105_termprojectcourseenrollmentapp;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-/**
- * @author Neil Valin
- */
-public class DBHelper extends SQLiteOpenHelper {
+public class DBHelperForTest extends SQLiteOpenHelper {
     private SQLiteDatabase db;
-    public DBHelper (Context context) {
+    public DBHelperForTest (Context context) {
         super(context, "CourseEnrollment.db", null, 1);
     }
 
@@ -189,7 +186,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         while (c.moveToNext()) {
             x.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
-            +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8)+"\n"+c.getString(7));
+                    +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8)+"\n"+c.getString(7));
         }
         return x.toArray(new String[0]);
     }
@@ -342,6 +339,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table users");
         db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
 
+    }
+    public int courseCount() {
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from courses", null);
+        return c.getCount();
+    }
+    public int userCount() {
+        db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from users", null);
+        return c.getCount();
     }
     public void deleteAllCourses() {
         db = this.getWritableDatabase();

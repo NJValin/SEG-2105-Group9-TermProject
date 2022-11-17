@@ -14,6 +14,13 @@
         android:theme="@style/Theme.SEG2105_TermProjectCourseEnrollmentApp"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".InstructorCourseEdit"
             android:exported="false">
             <meta-data
@@ -22,14 +29,16 @@
         </activity>
         <activity
             android:name=".InstructorHomePage"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".AdminCourseEdit"
-            android:exported="false">
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

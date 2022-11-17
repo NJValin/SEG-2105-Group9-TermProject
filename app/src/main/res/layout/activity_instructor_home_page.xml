@@ -65,6 +65,7 @@
         android:layout_height="30pt"
         android:id="@+id/crsNameSearch"
         android:backgroundTint="@color/white"
+        android:textColor="@color/white"
         android:hint="Course Name"
         android:maxLines="1"
         app:layout_constraintRight_toRightOf="parent"

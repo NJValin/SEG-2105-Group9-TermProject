@@ -97,6 +97,7 @@ public class InstructorHomePage extends AppCompatActivity {
 
     private void courseTeacher(String code, String crsname) {
         db.setInstructor(crsname, code, name);
+
     }
     private void toCourseEdit(){
         Intent w = new Intent(this, InstructorCourseEdit.class);
@@ -117,12 +118,30 @@ public class InstructorHomePage extends AppCompatActivity {
                 }
                 break;
             case R.id.teachCourse:
-                courseTeacher(crsName.getText().toString(),crsCode.getText().toString());
+                if (db.getInstructor(crsCode.getText().toString(), crsName.getText().toString()).equals("N/A")) {
+                    courseTeacher(crsName.getText().toString(),crsCode.getText().toString());
+                    errorMsg.setText("");
+                    teachCourse.setVisibility(View.INVISIBLE);
+                    crsName.setText("");
+                    crsCode.setText("");
+                    displayCourses();
+                }
+                else {
+                    errorMsg.setText("Another Instructor is already teaching that course!");
+                    teachCourse.setVisibility(View.INVISIBLE);
+                    crsName.setText("");
+                    crsCode.setText("");
+                    displayCourses();
+                }
+
+
                 break;
             case R.id.searchButton:
                 String courseName = crsName.getText().toString();
                 String courseCode = crsCode.getText().toString();
                 boolean exists = db.courseExists(courseCode,courseName);
+
+                errorMsg.setText(""+exists);
                 if (courseCode.equals("")||courseName.equals("")) {
                     crsName.setText("");
                     crsCode.setText("");
