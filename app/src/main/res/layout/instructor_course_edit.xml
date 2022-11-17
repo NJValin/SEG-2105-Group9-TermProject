@@ -35,14 +35,14 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ListView
-            android:layout_width="410dp"
-            android:layout_height="344dp"
             android:id="@+id/courseList"
+            android:layout_width="407dp"
+            android:layout_height="340dp"
             android:divider="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/timePick"
-            />
+            app:layout_constraintTop_toBottomOf="@id/timePick" />
 
         <Button
             android:id="@+id/setDay"
@@ -50,6 +50,7 @@
             android:layout_height="30pt"
             android:layout_marginTop="46dp"
             android:backgroundTint="@color/garnet"
+            android:visibility="invisible"
             android:text="Set Day"
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -62,6 +63,7 @@
             android:layout_height="30pt"
             android:layout_marginTop="46dp"
             android:backgroundTint="@color/garnet"
+            android:visibility="invisible"
             android:text="Set Student Limit"
             android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@id/setDay"
@@ -72,6 +74,7 @@
             android:layout_height="30pt"
             android:id="@+id/setDescription"
             android:backgroundTint="@color/garnet"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:text="SetDescription"
             app:layout_constraintTop_toBottomOf="@id/setDay"
@@ -85,6 +88,7 @@
             android:layout_height="20pt"
             android:layout_marginLeft="15dp"
             android:text="Back"
+            android:visibility="invisible"
             android:textColor="@color/white"
             android:textSize="6pt"
             android:backgroundTint="@color/garnet"
@@ -144,30 +148,54 @@
             app:layout_constraintBottom_toTopOf="@id/errorMsg"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <EditText
+        <Spinner
             android:id="@+id/dayone"
             android:layout_width="80pt"
-            android:layout_height="30pt"
-            android:layout_marginStart="16dp"
-            android:backgroundTint="@color/white"
-            android:hint="Day One"
-            android:inputType="datetime"
-            app:layout_constraintBottom_toTopOf="@id/confirmDay"
-            app:layout_constraintRight_toLeftOf="@id/daytwo"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_height="20pt"
+            android:background="@android:drawable/btn_dropdown"
+            android:visibility="visible"
+            android:backgroundTint="@color/garnet"
+            android:backgroundTintMode="multiply"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/dayonetime"
+            app:layout_constraintRight_toLeftOf="@id/daytwo"/>
 
-        <EditText
+        <Spinner
             android:id="@+id/daytwo"
             android:layout_width="80pt"
-            android:layout_height="30pt"
-            android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/white"
-            android:hint="Day Two"
-            android:inputType="datetime"
-            app:layout_constraintBottom_toTopOf="@id/confirmDay"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="20pt"
+            android:background="@android:drawable/btn_dropdown"
+            android:backgroundTint="@color/garnet"
+            android:visibility="visible"
+            android:backgroundTintMode="multiply"
+            app:layout_constraintBottom_toTopOf="@id/daytwotime"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/dayone" />
 
+        <EditText
+            android:id="@+id/dayonetime"
+            android:layout_width="80pt"
+            android:layout_height="20pt"
+            android:backgroundTint="@color/white"
+            android:hint="Day one time"
+            android:visibility="visible"
+            android:inputType="time"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/confirmDay"
+            app:layout_constraintRight_toLeftOf="@+id/daytwo"
+            app:layout_constraintLeft_toLeftOf="parent" />
+        <EditText
+            android:id="@+id/daytwotime"
+            android:layout_width="80pt"
+            android:layout_height="20pt"
+            android:backgroundTint="@color/white"
+            android:hint="Day one time"
+            android:visibility="visible"
+            android:textColor="@color/white"
+            android:inputType="time"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/dayonetime"
+            app:layout_constraintBottom_toTopOf="@id/confirmDay"/>
         <Button
             android:id="@+id/confirmDay"
             android:layout_width="80pt"

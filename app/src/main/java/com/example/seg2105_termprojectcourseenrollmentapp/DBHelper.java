@@ -174,7 +174,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         while (c.moveToNext()) {
             x.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
-            +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8));
+            +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8)+"\n"+c.getString(7));
         }
         return x.toArray(new String[0]);
     }
@@ -188,7 +188,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         while (c.moveToNext()) {
             x.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
-                    +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8));
+                    +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8)+"\n"+c.getString(7));
         }
         return x.toArray(new String[0]);
     }
