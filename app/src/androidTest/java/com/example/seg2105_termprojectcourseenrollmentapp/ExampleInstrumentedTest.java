@@ -39,7 +39,9 @@ public class ExampleInstrumentedTest {
         }
         assertEquals(50, db.courseCount());
         db.deleteAllCourses();
+
     }
+    @Test
     public void testDeleteCourse() {
         db = new DBHelperForTest(context);
         for (int x =1; x<10;x++) {
@@ -50,14 +52,33 @@ public class ExampleInstrumentedTest {
         assertEquals(i-1, db.courseCount());
         db.deleteAllCourses();
     }
+    @Test
     public void testUserExists(){
         db = new DBHelperForTest(context);
-        assertEquals(false, );
+        for (int i =0; i<50;i++) {
+            db.addUsers("test"+i,"pass","student", "Hello", "world");
+        }
+        assertEquals(false, db.userExists("test50"));
+        db.deleteAllUsers();
     }
+
+    @Test
     public void testCheckLogin(){
         db = new DBHelperForTest(context);
-        assertEquals(false, );
+        db.addUsers("test","pass","student", "Hello", "world");
+        assertEquals(false, db.checkLogin("test1", "pass"));
+        db.deleteAllUsers();
     }
+
+    @Test
+    public void testSetInstructor() {
+        db = new DBHelperForTest(context);
+        db.addCourse("testCourse", "test");
+        assertEquals("N/A", db.getInstructor("testCourse", "test"));
+        db.setInstructor("testCourse", "test", new String[] {"Justin", "Trudeau"});
+        assertEquals("Justin Trudeau", db.getInstructor("testCourse", "test"));
+    }
+
 
 
     @After
