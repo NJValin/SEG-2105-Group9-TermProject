@@ -240,11 +240,6 @@ public class InstructorCourseEdit extends AppCompatActivity {
                         daytwotime.setVisibility(View.INVISIBLE);
                         dayonetime.setVisibility(View.INVISIBLE);
                         dropCrs.setVisibility(View.INVISIBLE);
-                        dayOne = "";
-                        dayTwo = "";
-                        code = "";
-                        crsName = "";
-                        displayCourses();
                     }
                     else {
                         db.setCourseDayOne(crsName, code, dayone.getSelectedItem().toString());
@@ -266,12 +261,12 @@ public class InstructorCourseEdit extends AppCompatActivity {
                         dayonetime.setVisibility(View.INVISIBLE);
                         dropCrs.setVisibility(View.INVISIBLE);
                         errorMsg.setText("");
-                        dayOne = "";
-                        dayTwo = "";
-                        code = "";
-                        crsName = "";
-                        displayCourses();
                     }
+                    dayOne = "";
+                    dayTwo = "";
+                    code = "";
+                    crsName = "";
+                    displayCourses();
 
                 }
                 break;
@@ -311,6 +306,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
         courseList.setAdapter(adapter);
     }
+
     private void displayCourses() {
         course.clear();
         String[] x = db.courseListOfTeacher(name);
