@@ -40,6 +40,24 @@ public class ExampleInstrumentedTest {
         assertEquals(50, db.courseCount());
         db.deleteAllCourses();
     }
+    public void testDeleteCourse() {
+        db = new DBHelperForTest(context);
+        for (int x =1; x<10;x++) {
+            db.addCourse("crs"+x, "i="+x);
+        }
+        int i = db.courseCount();
+        db.removeCourse("crs"+i, "i="+i);
+        assertEquals(i-1, db.courseCount());
+        db.deleteAllCourses();
+    }
+    public void testUserExists(){
+        db = new DBHelperForTest(context);
+        assertEquals(false, );
+    }
+    public void testCheckLogin(){
+        db = new DBHelperForTest(context);
+        assertEquals(false, );
+    }
 
 
     @After
