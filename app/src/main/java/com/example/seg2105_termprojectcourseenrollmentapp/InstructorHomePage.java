@@ -94,12 +94,13 @@ public class InstructorHomePage extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, courses);
         courseList.setAdapter(adapter);
     }
-    //format the teachers name like firstname+" "+lastname, the courseListOfTeacher() method depends on it
+
     private void courseTeacher(String code, String crsname) {
         db.setInstructor(crsname, code, name);
     }
     private void toCourseEdit(){
         Intent w = new Intent(this, InstructorCourseEdit.class);
+        w.putExtra("username", name);
         startActivity(w);
     }
     public void onClick(View view) {

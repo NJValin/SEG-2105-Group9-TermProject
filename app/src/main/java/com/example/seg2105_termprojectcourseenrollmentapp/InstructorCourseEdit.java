@@ -66,7 +66,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
                 Object o = dayone.getItemAtPosition(position);
-                dayOne = o.toString();
+                setDayOne(o.toString());
             }
 
             @Override
@@ -78,7 +78,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Object o  =daytwo.getItemAtPosition(i);
-                dayTwo = o.toString();
+                setDayTwo(o.toString());
             }
 
             @Override
@@ -105,6 +105,12 @@ public class InstructorCourseEdit extends AppCompatActivity {
         });
 
     }
+    private void setDayOne(String s) {
+        dayOne = s;
+    }
+    private void setDayTwo(String s) {
+        dayTwo = s;
+    }
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.backButton:
@@ -119,6 +125,8 @@ public class InstructorCourseEdit extends AppCompatActivity {
                 description.setVisibility(View.INVISIBLE);
                 dayone.setVisibility(View.INVISIBLE);
                 daytwo.setVisibility(View.INVISIBLE);
+                daytwotime.setVisibility(View.INVISIBLE);
+                dayonetime.setVisibility(View.INVISIBLE);
                 errorMsg.setText("");
                 dayOne = "";
                 dayTwo = "";
@@ -164,6 +172,8 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     description.setVisibility(View.INVISIBLE);
                     dayone.setVisibility(View.INVISIBLE);
                     daytwo.setVisibility(View.INVISIBLE);
+                    daytwotime.setVisibility(View.INVISIBLE);
+                    dayonetime.setVisibility(View.INVISIBLE);
                     errorMsg.setText("");
                     dayOne = "";
                     dayTwo = "";
@@ -177,7 +187,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     errorMsg.setText("Please enter a student limit");
                 }
                 else {
-                    db.setStudentLimit(crsName, code, Integer.parseInt(errorMsg.getText().toString()));
+                    db.setStudentLimit(crsName, code, Integer.parseInt(stdLimit.getText().toString()));
                     setDay.setVisibility(View.INVISIBLE);
                     studentLimit.setVisibility(View.INVISIBLE);
                     setDescription.setVisibility(View.INVISIBLE);
@@ -189,6 +199,8 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     description.setVisibility(View.INVISIBLE);
                     dayone.setVisibility(View.INVISIBLE);
                     daytwo.setVisibility(View.INVISIBLE);
+                    daytwotime.setVisibility(View.INVISIBLE);
+                    dayonetime.setVisibility(View.INVISIBLE);
                     errorMsg.setText("");
                     dayOne = "";
                     dayTwo = "";
@@ -198,14 +210,15 @@ public class InstructorCourseEdit extends AppCompatActivity {
                 }
                 break;
             case R.id.confirmDay:
-                String x = dayonetime.getText().toString();
-                String y = daytwotime.getText().toString();
-                if (x.equals("")||y.equals("")||dayOne.equals("")||dayTwo.equals("")) {
-                    errorMsg.setText("Enter all fields");
+                if (dayonetime.getText().toString().equals("")||daytwotime.getText().toString().equals("")||dayone.getSelectedItem().toString().equals("")||daytwo.getSelectedItem().equals("")) {
+                    errorMsg.setText("Enter all fields ");
                 }
                 else {
-                    db.setCourseDay(crsName, code, dayOne, dayTwo);
-                    db.setCourseTime(crsName, code, x, y);
+
+                    db.setCourseDayOne(crsName, code, dayone.getSelectedItem().toString());
+                    db.setCourseDaytwo(crsName, code, daytwo.getSelectedItem().toString());
+                    db.setCourseTimeOne(crsName, code, dayonetime.getText().toString());
+                    db.setCourseTimeTwo(crsName, code, daytwotime.getText().toString());
                     setDay.setVisibility(View.INVISIBLE);
                     studentLimit.setVisibility(View.INVISIBLE);
                     setDescription.setVisibility(View.INVISIBLE);
@@ -217,6 +230,8 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     description.setVisibility(View.INVISIBLE);
                     dayone.setVisibility(View.INVISIBLE);
                     daytwo.setVisibility(View.INVISIBLE);
+                    daytwotime.setVisibility(View.INVISIBLE);
+                    dayonetime.setVisibility(View.INVISIBLE);
                     errorMsg.setText("");
                     dayOne = "";
                     dayTwo = "";

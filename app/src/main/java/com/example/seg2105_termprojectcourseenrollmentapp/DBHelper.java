@@ -112,25 +112,34 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return result!=-1;
     }
-    public void setCourseDay(String crsName, String crsCode, String dayOne, String dayTwo) {
+    public void setCourseDayOne(String crsName, String crsCode, String dayOne) {
         db = this.getWritableDatabase();
-        db.execSQL("update courses set firstDay=? and secondDay=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {dayOne, dayTwo});
+        db.execSQL("update courses set firstDay=? where courseCode=? and courseName=?", new String[] {dayOne, crsCode, crsName});
     }
+    public void setCourseDaytwo(String crsName, String crsCode, String dayTwo) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set secondDay=? where courseCode=? and courseName=?", new String[] {dayTwo, crsCode, crsName});
+    }
+
     public void setInstructor(String crsName, String crsCode, String[] name) {
         db = this.getWritableDatabase();
-        db.execSQL("update courses set instructorName = ? where courseCode="+crsCode+" and courseName="+crsName, new String[] {name[0]+" "+name[1]});
+        db.execSQL("update courses set instructorName = ? where courseCode=? and courseName=?", new String[] {name[0]+" "+name[1], crsName, crsCode});
     }
-    public void setCourseTime(String crsName, String crsCode, String timeOne, String timeTwo) {
+    public void setCourseTimeOne(String crsName, String crsCode, String timeOne) {
         db = this.getWritableDatabase();
-        db.execSQL("update courses set firstDayTime=? and secondDayTime=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {timeOne, timeTwo});
+        db.execSQL("update courses set firstDayTime=? where courseCode=? and courseName=?", new String[] {timeOne, crsCode, crsName});
+    }
+    public void setCourseTimeTwo(String crsName, String crsCode, String timetwo) {
+        db = this.getWritableDatabase();
+        db.execSQL("update courses set secondDayTime=? where courseCode=? and courseName=?", new String[] {timetwo, crsCode, crsName});
     }
     public void setDescription(String crsName, String crsCode, String description) {
         db = this.getWritableDatabase();
-        db.execSQL("update courses set description=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {description});
+        db.execSQL("update courses set description=? where courseCode=? and courseName=?", new String[] {description, crsCode, crsName});
     }
     public void setStudentLimit(String crsName, String crsCode, int limit) {
         db = this.getWritableDatabase();
-        db.execSQL("update courses set capacity=? where courseCode="+crsCode+" and courseName="+crsName, new String[] {limit+""});
+        db.execSQL("update courses set capacity=? where courseCode=? and courseName=?", new String[] {limit+"", crsCode, crsName});
 
     }
 
