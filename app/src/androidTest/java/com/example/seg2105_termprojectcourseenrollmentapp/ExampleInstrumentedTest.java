@@ -38,6 +38,7 @@ public class ExampleInstrumentedTest {
             db.addCourse("crs"+i, "i="+i);
         }
         assertEquals(50, db.courseCount());
+        db.deleteAllCourses();
     }
 
 
