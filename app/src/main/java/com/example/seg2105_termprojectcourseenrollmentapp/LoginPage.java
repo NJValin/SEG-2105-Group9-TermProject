@@ -147,13 +147,16 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
             startActivity(i);
         }
         else if (userType.equals("student")) {
-            errorMessage.setText("Not yet implemented");
+            Intent d = new Intent(this, StudentHomePage.class);
+            d.putExtra("username", userName.getText().toString());
             firstname.setVisibility(View.GONE);
             lastname.setVisibility(View.GONE);
             userName.setText("");
             this.password.setText("");
             firstname.setText("");
             lastname.setText("");
+            errorMessage.setText("");
+            startActivity(d);
         }
         else {
             Intent k = new Intent(this, InstructorHomePage.class);

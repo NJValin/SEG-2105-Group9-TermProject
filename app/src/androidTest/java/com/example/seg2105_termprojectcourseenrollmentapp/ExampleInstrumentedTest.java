@@ -53,7 +53,7 @@ public class ExampleInstrumentedTest {
         db.deleteAllCourses();
     }
     @Test
-    public void testUserExists(){
+    public void testUserExists() {
         db = new DBHelperForTest(context);
         for (int i =0; i<50;i++) {
             db.addUsers("test"+i,"pass","student", "Hello", "world");
@@ -77,9 +77,8 @@ public class ExampleInstrumentedTest {
         assertEquals("N/A", db.getInstructor("testCourse", "test"));
         db.setInstructor("testCourse", "test", new String[] {"Justin", "Trudeau"});
         assertEquals("Justin Trudeau", db.getInstructor("testCourse", "test"));
+        db.deleteAllCourses();
     }
-
-
 
     @After
     public void tearDown() {

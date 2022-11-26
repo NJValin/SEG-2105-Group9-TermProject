@@ -64,7 +64,7 @@
             android:backgroundTint="@color/garnet"
             android:visibility="invisible"
             android:textColor="@color/white"
-            android:text="SetDescription"
+            android:text="Set Description"
             app:layout_constraintTop_toBottomOf="@id/setDay"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
