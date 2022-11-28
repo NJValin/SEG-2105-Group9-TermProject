@@ -121,7 +121,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cntntVal.put("capacity", 0);
         long result = db.insert("courses", null, cntntVal);//returns -1 if insertion isn't successful
         //create the table of students in the course
-        db.execSQL("create table "+crsCode+"Students( foreign key(student) references users(userName)), studentName Text");
+        db.execSQL("create table "+crsCode+"Students(student Text, studentName Text)");
         return result!=-1;
     }
     public boolean enroll(String crsCode, String userName) {

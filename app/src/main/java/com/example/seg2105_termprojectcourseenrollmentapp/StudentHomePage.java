@@ -42,7 +42,6 @@ public class StudentHomePage extends AppCompatActivity {
 
         //other private vars
         crsName=crsCode="";
-
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
         Bundle extras = getIntent().getExtras();
         course = new ArrayList<>();
@@ -80,13 +79,35 @@ public class StudentHomePage extends AppCompatActivity {
         String[] x = db.courseListForInstructor();
         if (x.length==1&&x[0].equals("")) {
             course.add("No Courses at the moment.");
+            return;
+        }
+
+        for (String q : x) {
+            course.add(q);
+        }
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
+        courses.setAdapter(adapter);
+    }
+    private void search(String crsC, String crsN) {
+        course.clear();
+        if (crsC.equals("") && crsN.equals("")) {
+            displayCourses();
+            errorMsg.setText("Please input a course code or course name");
+            return;
+        }
+        else if (!crsC.equals("") && !crsN.equals("")) {
+            course = db.searchCourse(crsC, crsN);
+        }
+        else if (!crsC.equals("")) {
+          course = db.searchCourseByCode(crsC);
         }
         else {
-            for (String q : x) {
-                course.add(q);
-            }
+            course = db.searchCourseByName(crsN);
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
         courses.setAdapter(adapter);
+        errorMsg.setText("");
+
     }
 }
