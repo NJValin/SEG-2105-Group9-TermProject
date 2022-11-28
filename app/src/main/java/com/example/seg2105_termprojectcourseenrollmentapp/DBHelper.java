@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -68,6 +70,14 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * A method meant for the admin course page.
+     *
+     * @param crsCode - The code of the course
+     * @param crsName - The name of the course
+     * @return A string that holds the basic information of the course i.e. <b>crsCode</b> &
+     *         <b>crsName</b>
+     */
     public String getCourse (String crsCode, String crsName) {
         db = this.getWritableDatabase();
         Cursor c = db.rawQuery("select * from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
@@ -110,8 +120,22 @@ public class DBHelper extends SQLiteOpenHelper {
         cntntVal.put("description", "N/A");
         cntntVal.put("capacity", 0);
         long result = db.insert("courses", null, cntntVal);//returns -1 if insertion isn't successful
-
+        //create the table of students in the course
+        db.execSQL("create table "+crsCode+"Students( foreign key(student) references users(userName)), studentName Text");
         return result!=-1;
+    }
+    public boolean enroll(String crsCode, String userName) {
+        db = this.getWritableDatabase();
+        ContentValues s = new ContentValues();
+        s.put("student", userName);
+        String[] name = getName(userName);
+        s.put("studentName", name[0]+" "+name[1]);
+        long result = db.insert(crsCode+"Students", null, s);
+        return result!=-1;
+    }
+    public void dropClass(String crsCode, String userName) {
+        db = this.getWritableDatabase();
+        db.execSQL("delete from "+crsCode+"Students where student=?", new String[] {userName});
     }
     public void resetCourse(String crsC, String crsN) {
         db = this.getWritableDatabase();
@@ -132,7 +156,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("update courses set secondDay=? where courseCode=? and courseName=?", new String[] {dayTwo, crsCode, crsName});
     }
 
-    public void setInstructor(String crsName, String crsCode, String[] name) {
+    public void setInstructor(String crsName, String crsCode, @NonNull String[] name) {
         db = this.getWritableDatabase();
         db.execSQL("update courses set instructorName = ? where courseCode=? and courseName=?", new String[] {name[0]+" "+name[1], crsName, crsCode});
     }
@@ -258,6 +282,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void removeCourse(String crsCode, String crsName) {
         db.execSQL("delete from courses where courseCode=? and courseName=?", new String[] {crsCode, crsName});
+        db.execSQL("drop table if exists "+crsCode+"Students");
 
     }
     public void editCourse(String newCrsCode, String oldCrsCode, String newCrsName, String oldCrsName) {

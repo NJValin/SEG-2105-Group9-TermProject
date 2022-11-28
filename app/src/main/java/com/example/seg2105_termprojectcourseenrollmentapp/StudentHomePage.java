@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,9 +15,10 @@ import java.util.ArrayList;
 
 public class StudentHomePage extends AppCompatActivity {
     private TextView wlcm, errorMsg;
-    private Button back, enroll, toEnrolledCourses;
+    private Button back, enroll, toEnrolledCourses, search;
     private ListView courses;
     private String[] name;
+    private EditText crsCSearch, crsNSearch;
     private DBHelper db;
     private String crsName, crsCode;
     private ArrayList<String> course;
@@ -33,10 +35,14 @@ public class StudentHomePage extends AppCompatActivity {
         enroll = (Button) findViewById(R.id.enroll);
         toEnrolledCourses = (Button) findViewById(R.id.goToUsersClasses);
         courses = (ListView) findViewById(R.id.courseList);
+        search = (Button) findViewById(R.id.search);
+        crsNSearch  = (EditText) findViewById(R.id.crsNSearch);
+        crsCSearch = (EditText) findViewById(R.id.crsCSearch);
+
 
         //other private vars
-        crsName="";
-        crsCode="";
+        crsName=crsCode="";
+
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
         Bundle extras = getIntent().getExtras();
         course = new ArrayList<>();
