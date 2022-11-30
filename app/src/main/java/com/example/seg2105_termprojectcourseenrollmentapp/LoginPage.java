@@ -15,6 +15,7 @@ public class LoginPage extends AppCompatActivity implements View.OnClickListener
     private Button signIn, register, instructorBtn, studentBtn;
     private TextView errorMessage;
     private DBHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

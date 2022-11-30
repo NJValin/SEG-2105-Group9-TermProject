@@ -65,12 +65,51 @@ public class StudentHomePage extends AppCompatActivity {
 
         });
 
+        back.setOnClickListener(this::onClick);
+        enroll.setOnClickListener(this::onClick);
+        toEnrolledCourses.setOnClickListener(this::onClick);
+        search.setOnClickListener(this::onClick);
+
+    }
+
+    private void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.backBtn:
+                reset();
+                break;
+            case R.id.goToUsersClasses:
+
+                break;
+            case R.id.enroll:
+
+                break;
+            case R.id.search:
+                search(crsCode, crsName);
+                break;
+        }
+    }
+    private void reset() {
+        displayCourses();
+        errorMsg.setText("");
+        crsCSearch.setText("");
+        crsNSearch.setText("");
+        crsName = crsCode = "";
+        enroll.setVisibility(View.INVISIBLE);
+        toEnrolledCourses.setVisibility(View.VISIBLE);
+        crsNSearch.setVisibility(View.VISIBLE);
+        crsCSearch.setVisibility(View.VISIBLE);
+        search.setVisibility(View.VISIBLE);
+        wlcm.setVisibility(View.VISIBLE);
     }
     private void selectItem(Object o) {
         course.clear();
         course.add(o.toString());
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
         courses.setAdapter(adapter);
+        enroll.setVisibility(View.VISIBLE);
+        crsNSearch.setVisibility(View.INVISIBLE);
+        crsCSearch.setVisibility(View.INVISIBLE);
+        search.setVisibility(View.INVISIBLE);
         back.setVisibility(View.VISIBLE);
         wlcm.setVisibility(View.INVISIBLE);
     }

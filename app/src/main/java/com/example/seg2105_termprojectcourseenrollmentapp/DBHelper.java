@@ -57,6 +57,9 @@ public class DBHelper extends SQLiteOpenHelper {
         cntntVal.put("userType", userType);
         cntntVal.put("firstname", firstName);
         cntntVal.put("lastname", lastName);
+        if (userType.equals("student")) {
+            db.execSQL("create Table "+username+"Classes(crsCode Text, crsName Text, dayOne Text, timeOne Text, dayTwo Text, timeTwo Text)");
+        }
         if (checkLogin(username, password)==true) {
             return false;
         }
@@ -124,18 +127,65 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("create table "+crsCode+"Students(student Text, studentName Text)");
         return result!=-1;
     }
-    public boolean enroll(String crsCode, String userName) {
+    //db.execSQL("create Table "+username+"Classes(crsCode Text, crsName Text, dayOne Text, timeOne Text, dayTwo Text, timeTwo Text)");
+    public boolean enroll(String crsCode, String crsName, String userName) {
         db = this.getWritableDatabase();
         ContentValues s = new ContentValues();
         s.put("student", userName);
         String[] name = getName(userName);
         s.put("studentName", name[0]+" "+name[1]);
+        ContentValues k = new ContentValues();
+        k.put("crsCode", crsCode);
+        k.put("crsName", crsName);
+        String[] classCred = getClassInfo(crsCode);
+        k.put("dayOne", classCred[0]);
+        k.put("timeOne", classCred[1]);
+        k.put("dayTwo", classCred[2]);
+        k.put("timeTwo", classCred[3]);
         long result = db.insert(crsCode+"Students", null, s);
-        return result!=-1;
+        long result2 = db.insert(userName+"Classes", null, k);
+        return result!=-1&&result2!=-1;
+    }
+    public boolean validateEnrollment(String crsCode, String userName) {
+        db = this.getWritableDatabase();
+        //check that the student is not in the class.
+        Cursor c = db.rawQuery("select * from "+crsCode+"Students where student=?", new String[] {userName});
+        boolean b=c.getCount()==0;
+        //check that there are no time conflicts
+        String[] times = getClassInfo(crsCode);
+        Cursor c2 = db.rawQuery("select * from "+userName+"Classes where dayOne=? and timeOne=?",new String[] {times[0], times[1]});
+        boolean b2 = c2.getCount()==0;
+        Cursor c3 = db.rawQuery("select * from "+userName+"Classes where dayTwo=? and timeTwo=?", new String[] {times[2], times[3]});
+        boolean b3 = c3.getCount()==0;
+        return b&&(b2||b3);
+    }
+    //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+    //                " instructorName Text, description Text, capacity Integer)");
+    private String[] getClassInfo(String crsCode) {
+        String[] toReturn;
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select firstDay, firstDayTime, secondDay, secondDayTime from courses where courseCode=?",new String[] {crsCode});
+        toReturn = new String[] {c.getString(0), c.getString(1), c.getString(2), c.getString(3)};
+        return toReturn;
     }
     public void dropClass(String crsCode, String userName) {
         db = this.getWritableDatabase();
         db.execSQL("delete from "+crsCode+"Students where student=?", new String[] {userName});
+    }
+    public ArrayList<String> getStudents(String crsCode) {
+        ArrayList<String> x = new ArrayList<>();
+        db=this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from users", null);
+        while(c.moveToNext()) {
+            x.add(c.getString(0)+": "+c.getString(1));
+        }
+        return x;
+    }
+
+    public boolean inClass(String crsCode, String username) {
+        db = this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from "+crsCode+"Students where student=?", new String[] {username});
+        return c.getCount()!=0;
     }
     public void resetCourse(String crsC, String crsN) {
         db = this.getWritableDatabase();
@@ -211,9 +261,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return x.toArray(new String[0]);
     }
-    //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
-    //                " instructorName Text, description Text, capacity Integer)");
-    //    }
+
     public String[] courseListForInstructor() {
         ArrayList<String> x = new ArrayList<>();
         db = this.getWritableDatabase();
@@ -274,7 +322,9 @@ public class DBHelper extends SQLiteOpenHelper {
         if (userType.equals("admin")|| userType.equals("null")) {
             return false;
         }
-
+        if (userType.equals("student")) {
+            db.execSQL("drop table "+username+"Classes");
+        }
         db.execSQL("delete from users where userName=?", new String[] {username});
 
         return true;
