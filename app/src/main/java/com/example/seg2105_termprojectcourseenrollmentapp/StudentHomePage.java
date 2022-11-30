@@ -20,7 +20,7 @@ public class StudentHomePage extends AppCompatActivity {
     private String[] name;
     private EditText crsCSearch, crsNSearch;
     private DBHelper db;
-    private String crsName, crsCode;
+    private String crsName, crsCode, username;
     private ArrayList<String> course;
     private ArrayAdapter<String> adapter;
 
@@ -46,10 +46,9 @@ public class StudentHomePage extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         course = new ArrayList<>();
         name = db.getName(extras.getString("username"));
+        username = extras.getString("username");
         wlcm.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as a student");
-
         displayCourses();
-
         courses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -100,6 +99,9 @@ public class StudentHomePage extends AppCompatActivity {
         crsCSearch.setVisibility(View.VISIBLE);
         search.setVisibility(View.VISIBLE);
         wlcm.setVisibility(View.VISIBLE);
+    }
+    private boolean validate(String crsCode, String username) {
+        return db.validateEnrollment(crsCode, username);
     }
     private void selectItem(Object o) {
         course.clear();
