@@ -2,6 +2,7 @@ package com.example.seg2105_termprojectcourseenrollmentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,12 +17,14 @@ import java.util.ArrayList;
 public class StudentHomePage extends AppCompatActivity {
     private TextView wlcm, errorMsg;
     private Button back, enroll, toEnrolledCourses, search;
-    private ListView courses;
+    private ListView courses,enrolledCourses;;
     private String[] name;
     private EditText crsCSearch, crsNSearch;
     private DBHelper db;
+    //private DBHelper db2;
     private String crsName, crsCode, username;
     private ArrayList<String> course;
+    private ArrayList<String> enrolledCourse;
     private ArrayAdapter<String> adapter;
 
     @Override
@@ -77,13 +80,86 @@ public class StudentHomePage extends AppCompatActivity {
                 reset();
                 break;
             case R.id.goToUsersClasses:
+                displayEnrolledCourses();
+                break;
+            case R.id.enroll: // db.validateEnrollment(crsCode,username) && db.enroll(crsCode,crsName,username)
+                //System.out.println("People");
+                if(db.validateEnrollment(crsCode,username) && db.enroll(crsCode,crsName,username)){
+                    //System.out.println("Things");
+                    errorMsg.setText("");
+                    enroll.setVisibility(View.INVISIBLE);
+                    //Add to validate enrollment the
+                    /* db2 = db.getWritableDatabase();
+                    Cursor c = db.rawQuery("select * from "+crsCode+"Students where student=?", new String[] {userName});
+                    enrolledCourses =
+                       */
+                } else{
+                  //  System.out.println("Stuff");
+                    errorMsg.setText("Cannot enroll in course");
+                    crsCode = "";
+                    crsName = "";
+                    displayCourses();
+                }
 
                 break;
-            case R.id.enroll:
 
-                break;
             case R.id.search:
-                search(crsCode, crsName);
+                String courseName = crsNSearch.getText().toString();
+                String courseCode = crsCSearch.getText().toString();
+                boolean exists = db.courseExists(courseCode,courseName);
+
+                if (courseCode.equals("")&&courseName.equals("")) {
+
+                    crsNSearch.setText("");
+                    crsCSearch.setText("");
+                    displayCourses();
+                    errorMsg.setText("Invalid Course code/name");
+                }
+                else {
+                    ArrayList<String> temp;
+                    if (!courseCode.equals("")&&courseName.equals("")) {
+                        temp = db.searchCourseByCode(courseCode);
+                        if (temp.size()!=0) {
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courses.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsNSearch.setText("");
+                            crsCSearch.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                    else if (courseCode.equals("")&&!courseName.equals("")) {
+                        temp  = db.searchCourseByName(courseName);
+                        if (temp.size()!=0) {
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courses.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsNSearch.setText("");
+                            crsCSearch.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                    else {
+                        if (exists) {
+                            temp  =db.searchCourse(courseCode, courseName);
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courses.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsNSearch.setText("");
+                            crsCSearch.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                }
                 break;
         }
     }
@@ -128,6 +204,21 @@ public class StudentHomePage extends AppCompatActivity {
         }
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
+        courses.setAdapter(adapter);
+    }
+    private void displayEnrolledCourses() {
+        enrolledCourse.clear();
+        String[] x = db.courseList();
+        if (x.length==1&&x[0].equals("")) {
+            enrolledCourse.add("No Courses at the moment.");
+            return;
+        }
+
+        for (String q : x) {
+            enrolledCourse.add(q);
+        }
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, enrolledCourse;);
         courses.setAdapter(adapter);
     }
     private void search(String crsC, String crsN) {

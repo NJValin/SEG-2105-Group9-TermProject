@@ -15,7 +15,6 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
 public class AdminCourseEdit extends AppCompatActivity {
     private DBHelper db;
     private EditText code, name;
