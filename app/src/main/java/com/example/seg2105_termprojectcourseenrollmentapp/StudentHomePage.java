@@ -1,6 +1,7 @@
 package com.example.seg2105_termprojectcourseenrollmentapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -41,8 +42,6 @@ public class StudentHomePage extends AppCompatActivity {
         search = (Button) findViewById(R.id.search);
         crsNSearch  = (EditText) findViewById(R.id.crsNSearch);
         crsCSearch = (EditText) findViewById(R.id.crsCSearch);
-
-
         //other private vars
         crsName=crsCode="";
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
@@ -80,7 +79,10 @@ public class StudentHomePage extends AppCompatActivity {
                 reset();
                 break;
             case R.id.goToUsersClasses:
-                displayEnrolledCourses();
+
+                Intent intent = new Intent(getApplicationContext(), StudentCourses.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
                 break;
             case R.id.enroll: // db.validateEnrollment(crsCode,username) && db.enroll(crsCode,crsName,username)
                 errorMsg.setText(crsCode+": "+crsName+", "+username);
@@ -224,21 +226,7 @@ public class StudentHomePage extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
         courses.setAdapter(adapter);
     }
-    private void displayEnrolledCourses() {
-        enrolledCourse.clear();
-        String[] x = db.courseList();
-        if (x.length==1&&x[0].equals("")) {
-            enrolledCourse.add("No Courses at the moment.");
-            return;
-        }
 
-        for (String q : x) {
-            enrolledCourse.add(q);
-        }
-
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, enrolledCourse);
-        courses.setAdapter(adapter);
-    }
     private void search(String crsC, String crsN) {
         course.clear();
         if (crsC.equals("") && crsN.equals("")) {
