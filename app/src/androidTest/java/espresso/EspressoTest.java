@@ -9,6 +9,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.Matchers.hasToString;
 
 import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -60,11 +61,11 @@ public class EspressoTest {
 
     @Test
     public void studentCourseIsDisplayed(){
-        onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
-        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
-        onView(ViewMatchers.withId(R.id.courseList)).check(matches(isDisplayed()));
-        onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.clearText(), ViewActions.typeText("MAT"));
-        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.clearText(),ViewActions.typeText("1302"));
+        onView(withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
+        onView(withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
+        onView(withId(R.id.courseList).check((ViewAssertions.matches (Matchers.withListSize (1)))));
+        onView(withId(R.id.crsCSearch)).perform(ViewActions.clearText(), ViewActions.typeText("MAT"));
+        onView(withId(R.id.crsNSearch)).perform(ViewActions.clearText(),ViewActions.typeText("1302"));
     }
 
 

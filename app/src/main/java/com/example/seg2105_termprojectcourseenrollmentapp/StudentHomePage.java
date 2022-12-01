@@ -48,9 +48,9 @@ public class StudentHomePage extends AppCompatActivity {
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
         Bundle extras = getIntent().getExtras();
         course = new ArrayList<>();
-        name = db.getName(extras.getString("username"));
-        username = extras.getString("username");
-        wlcm.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as a student");
+        //name = db.getName(extras.getString("username"));
+        //username = extras.getString("username");
+        //wlcm.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as a student");
         displayCourses();
         courses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
