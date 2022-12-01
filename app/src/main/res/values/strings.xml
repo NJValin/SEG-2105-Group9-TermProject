@@ -15,4 +15,5 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="enter_name">Enter Name</string>
     <string name="search">🔎︎</string>
+    <string name="list_of_courses">List of Courses</string>
 </resources>

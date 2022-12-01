@@ -115,7 +115,7 @@
             android:id="@+id/createClass"
             android:backgroundTint="@color/garnet"
             android:textColor="@color/white"
-            android:text="CreateClass"
+            android:text="Create Course"
             app:layout_constraintTop_toBottomOf="@id/returnToHome"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
