@@ -176,10 +176,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return toReturn;
     }
-    public void dropClass(String crsCode, String userName) {
+    public void dropClass(String courseCode, String userName) {
         db = this.getWritableDatabase();
-        db.execSQL("delete from "+userName+"Classes where courseCode=?", new String[] {crsCode});
-        db.execSQL("delete from "+crsCode+"Students where student=?", new String[] {userName});
+        db.execSQL("delete from "+userName+"Classes where crsCode=?", new String[] {courseCode});
+        db.execSQL("delete from "+courseCode+"Students where student=?", new String[] {userName});
     }
     public ArrayList<String> getStudents(String crsCode) {
         ArrayList<String> x = new ArrayList<>();
@@ -195,6 +195,9 @@ public class DBHelper extends SQLiteOpenHelper {
         ArrayList<String> x = new ArrayList<>();
         db=this.getReadableDatabase();
         Cursor c = db.rawQuery("select * from "+username+"Classes" , null);
+        if (c.getCount()==0) {
+            return new String[] {""};
+        }
         while(c.moveToNext()) {
             x.add(c.getString(0)+": "+c.getString(1)+": "+c.getString(2)+": "+c.getString(3)+", "+
                     c.getString(4)+": "+c.getString(5));

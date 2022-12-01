@@ -57,6 +57,8 @@ public class StudentCourses extends AppCompatActivity {
         String[] x = db.getSchoolSchedule(username);
         if (x.length==1&&x[0].equals("")) {
             course.add("No Courses at the moment.");
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
+            courses.setAdapter(adapter);
             return;
         }
 
@@ -73,9 +75,9 @@ public class StudentCourses extends AppCompatActivity {
                 reset();
                 break;
             case R.id.dropCourse:
-                //db.dropClass(crsCToDrop, username);
-                error.setText(crsCToDrop+" "+crsNToDrop+" "+username);
-                //reset();
+                db.dropClass(crsCToDrop, username);
+
+                reset();
                 break;
         }
     }
