@@ -97,6 +97,7 @@ public class StudentCourses extends AppCompatActivity {
         courses.setAdapter(adapter);
         back.setVisibility(View.VISIBLE);
         dropCrs.setVisibility(View.VISIBLE);
+
     }
 
 }

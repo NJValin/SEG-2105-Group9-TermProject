@@ -211,6 +211,25 @@ public class DBHelper extends SQLiteOpenHelper {
         return toReturn;
 
     }
+    //db.execSQL("create table "+crsCode+"Students(student Text, studentName Text)");
+    public String[] getStudentList(String courseCode) {
+        ArrayList<String> x = new ArrayList<>();
+        db=this.getReadableDatabase();
+        Cursor c = db.rawQuery("select * from "+courseCode+"Students" , null);
+        if (c.getCount()==0) {
+            return new String[] {""};
+        }
+        while(c.moveToNext()) {
+            x.add(c.getString(0)+": "+c.getString(1));
+        }
+        String[] toReturn = new String[x.size()];
+        int i =0;
+        for (String q:x) {
+            toReturn[i]=q;
+            i++;
+        }
+        return toReturn;
+    }
     public boolean inClass(String crsCode, String username) {
         db = this.getWritableDatabase();
         Cursor c = db.rawQuery("select * from "+crsCode+"Students where student=?", new String[] {username});
@@ -225,6 +244,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("update courses set secondDayTime=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
         db.execSQL("update courses set description=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
         db.execSQL("update courses set capacity=? where courseCode=? and courseName=?", new String[] {"N/A", crsC, crsN});
+        db.execSQL("drop table if exists "+crsC+"Students");
+        db.execSQL("create table "+crsC+"Students(student Text, studentName Text)");
     }
     public void setCourseDayOne(String crsName, String crsCode, String dayOne) {
         db = this.getWritableDatabase();

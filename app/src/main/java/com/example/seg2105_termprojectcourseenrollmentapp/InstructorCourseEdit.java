@@ -15,14 +15,15 @@ import android.widget.TimePicker;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InstructorCourseEdit extends AppCompatActivity {
     private TextView errorMsg;
-    private ListView courseList;
-    private Button setDay, studentLimit, setDescription, backButton, cnfrmStdLim, cnfrmDesc, cnfrmDay, dropCrs;
+    private ListView courseList, stdList;
+    private Button setDay, studentLimit, setDescription, backButton, cnfrmStdLim, cnfrmDesc, cnfrmDay, dropCrs, showStd;
     private EditText stdLimit, description, dayonetime, daytwotime;
     private Spinner dayone, daytwo;
-    private ArrayList<String> course;
+    private ArrayList<String> course, students;
     private ArrayAdapter<String> adapter;
 
     private String code, crsName, dayOne, dayTwo;
@@ -38,6 +39,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
         studentLimit = (Button) findViewById(R.id.studentLimitBtn);
         setDescription = (Button) findViewById(R.id.setDescription);
         backButton = (Button) findViewById(R.id.backButton);
+        showStd = (Button) findViewById(R.id.showStudents);
         stdLimit = (EditText) findViewById(R.id.studentLimitTextBox);
         cnfrmStdLim = (Button) findViewById(R.id.confirmStudentLimit);
         description = (EditText) findViewById(R.id.descriptionTextBox);
@@ -48,6 +50,8 @@ public class InstructorCourseEdit extends AppCompatActivity {
         daytwo = (Spinner) findViewById(R.id.daytwo);
         cnfrmDay = (Button) findViewById(R.id.confirmDay);
         dropCrs = (Button) findViewById(R.id.dropCourse);
+        stdList = (ListView) findViewById(R.id.studentList);
+
 
         ArrayAdapter adapterDayOne = new ArrayAdapter(this, android.R.layout.simple_spinner_item, new String[] {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
         ArrayAdapter adapterDayTwo = new ArrayAdapter(this, android.R.layout.simple_spinner_item, new String[] {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
@@ -58,6 +62,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
 
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
         Bundle extras = getIntent().getExtras();
+        students = new ArrayList<>();
         name = extras.getStringArray("username");
         course = new ArrayList<>();
         code = crsName = dayOne = dayTwo = "";
@@ -95,6 +100,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
         cnfrmDay.setOnClickListener(this::onClick);
         cnfrmDesc.setOnClickListener(this::onClick);
         dropCrs.setOnClickListener(this::onClick);
+        showStd.setOnClickListener(this::onClick);
         displayCourses();
         courseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -130,6 +136,9 @@ public class InstructorCourseEdit extends AppCompatActivity {
                 daytwotime.setVisibility(View.INVISIBLE);
                 dayonetime.setVisibility(View.INVISIBLE);
                 dropCrs.setVisibility(View.INVISIBLE);
+                stdList.setVisibility(View.GONE);
+                showStd.setVisibility(View.INVISIBLE);
+                courseList.setVisibility(View.VISIBLE);
                 errorMsg.setText("");
                 dayOne = "";
                 dayTwo = "";
@@ -292,6 +301,24 @@ public class InstructorCourseEdit extends AppCompatActivity {
                 code = "";
                 crsName = "";
                 displayCourses();
+            case R.id.showStudents:
+                setDay.setVisibility(View.INVISIBLE);
+                studentLimit.setVisibility(View.INVISIBLE);
+                setDescription.setVisibility(View.INVISIBLE);
+                cnfrmDay.setVisibility(View.INVISIBLE);
+                cnfrmStdLim.setVisibility(View.INVISIBLE);
+                cnfrmDesc.setVisibility(View.INVISIBLE);
+                stdLimit.setVisibility(View.INVISIBLE);
+                description.setVisibility(View.INVISIBLE);
+                dayone.setVisibility(View.INVISIBLE);
+                daytwo.setVisibility(View.INVISIBLE);
+                daytwotime.setVisibility(View.INVISIBLE);
+                dayonetime.setVisibility(View.INVISIBLE);
+                dropCrs.setVisibility(View.INVISIBLE);
+                courseList.setVisibility(View.INVISIBLE);
+                stdList.setVisibility(View.VISIBLE);
+                errorMsg.setText("");
+                showStudents();
         }
 
     }
@@ -301,12 +328,27 @@ public class InstructorCourseEdit extends AppCompatActivity {
         setDescription.setVisibility(View.VISIBLE);
         backButton.setVisibility(View.VISIBLE);
         dropCrs.setVisibility(View.VISIBLE);
+        showStd.setVisibility(View.VISIBLE);
         course.clear();
         course.add(o.toString());
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, course);
         courseList.setAdapter(adapter);
     }
-
+    private void showStudents() {
+        students.clear();
+        String[] x = db.getStudentList(code);
+        if (x.length==1&&x[0].equals("")) {
+            students.add("No students at the moment");
+            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
+            stdList.setAdapter(adapter);
+            return;
+        }
+        for (String q: x) {
+            course.add(q);
+        }
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
+        stdList.setAdapter(adapter);
+    }
     private void displayCourses() {
         course.clear();
         String[] x = db.courseListOfTeacher(name);

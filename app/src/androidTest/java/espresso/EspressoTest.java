@@ -36,6 +36,7 @@ public class EspressoTest {
             new ActivityScenarioRule<>(StudentHomePage.class);
 
 
+
     @Test
     public void courseCodeIsDisplayedAsHint() {
         onView(withHint("Course Code")).check(matches(isDisplayed()));
@@ -47,14 +48,13 @@ public class EspressoTest {
         onView(withHint("Course Name")).check(matches(isDisplayed()));
         onView(withHint("Course Name")).check(isCompletelyLeftOf(withId(R.id.crsNSearch)));
     }
-
     @Test
-    public void enrollIsCorrect(){
-        String x = "ENG: 1102: Dr.N/A, Days:N/A @ N/A, N/A @ N/A student limit: 0\nN/A";
+    public void testIncorrectSearch(){
+
         onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
-        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
-        onData(hasToString(startsWith(x))).inAdapterView(withId(R.id.courseList)).atPosition(0).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1101"));
         onView(ViewMatchers.withId(R.id.goToUsersClasses)).perform(ViewActions.click());
+        onView(ViewMatchers.withId(R.id.error)).check(matches(withText("Invalid Course code/name")));
     }
 
     @Test

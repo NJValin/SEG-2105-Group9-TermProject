@@ -31,6 +31,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/errorMsg" />
+        <ListView
+            android:id="@+id/studentList"
+            android:layout_width="407dp"
+            android:layout_height="340dp"
+            android:visibility="gone"
+            android:divider="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/errorMsg" />
 
         <Button
             android:id="@+id/setDay"
@@ -80,6 +91,17 @@
             app:layout_constraintTop_toBottomOf="@id/setDescription"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
+        <Button
+            android:layout_width="160pt"
+            android:layout_height="20pt"
+            android:backgroundTint="@color/garnet"
+            android:id="@+id/showStudents"
+            android:text="Show Students"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/dropCourse"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:visibility="invisible"/>
         <Button
             android:id="@+id/backButton"
             android:layout_width="40pt"
