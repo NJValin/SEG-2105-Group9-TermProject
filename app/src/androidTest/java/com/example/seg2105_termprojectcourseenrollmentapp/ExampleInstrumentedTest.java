@@ -31,6 +31,7 @@ public class ExampleInstrumentedTest {
         db = new DBHelperForTest(context);
         db.addUsers("test","pass","student", "Hello", "world");
         assertEquals(true, db.userExists("test"));
+        db.deleteAllCourses();
     }
 
     @Test
@@ -39,7 +40,7 @@ public class ExampleInstrumentedTest {
         for (int i =0; i<50;i++) {
             db.addCourse("crs"+i, "i="+i);
         }
-        assertEquals(50, db.courseCount());
+        assertEquals(50, db.courseList().length);
         db.deleteAllCourses();
 
     }
@@ -49,15 +50,15 @@ public class ExampleInstrumentedTest {
         for (int x =1; x<10;x++) {
             db.addCourse("crs"+x, "i="+x);
         }
-        int i = db.courseCount();
+        int i = db.courseList().length;
         db.removeCourse("crs"+i, "i="+i);
-        assertEquals(i-1, db.courseCount());
+        assertEquals(i-1, db.courseList().length);
         db.deleteAllCourses();
     }
     @Test
     public void testUserExists(){
         db = new DBHelperForTest(context);
-        assertEquals(false, );
+        assertEquals(false,false);
         for (int i =0; i<50;i++) {
             db.addUsers("test"+i,"pass","student", "Hello", "world");
         }
@@ -68,7 +69,7 @@ public class ExampleInstrumentedTest {
     @Test
     public void testCheckLogin(){
         db = new DBHelperForTest(context);
-        assertEquals(false, );
+        assertEquals(false,false);
         db.addUsers("test","pass","student", "Hello", "world");
         assertEquals(false, db.checkLogin("test1", "pass"));
         db.deleteAllUsers();
@@ -81,6 +82,14 @@ public class ExampleInstrumentedTest {
         assertEquals("N/A", db.getInstructor("testCourse", "test"));
         db.setInstructor("testCourse", "test", new String[] {"Justin", "Trudeau"});
         assertEquals("Justin Trudeau", db.getInstructor("testCourse", "test"));
+        db.deleteAllUsers();
+    }
+
+    @Test
+    public void testEnroll(){
+        db = new DBHelperForTest(context);
+        assertFalse( db.enrol("testCourse","test","testUser"));
+        db.deleteAllUsers();
     }
 
 
