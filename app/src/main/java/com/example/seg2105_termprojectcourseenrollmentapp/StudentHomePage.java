@@ -83,7 +83,62 @@ public class StudentHomePage extends AppCompatActivity {
 
                 break;
             case R.id.search:
-                search(crsCode, crsName);
+                String courseName = crsNSearch.getText().toString();
+                String courseCode = crsCSearch.getText().toString();
+                boolean exists = db.courseExists(courseCode,courseName);
+
+                if (courseCode.equals("")&&courseName.equals("")) {
+
+                    crsNSearch.setText("");
+                    crsCSearch.setText("");
+                    displayCourses();
+                    errorMsg.setText("Invalid Course code/name");
+                }
+                else {
+                    ArrayList<String> temp;
+                    if (!courseCode.equals("")&&courseName.equals("")) {
+                        temp = db.searchCourseByCode(courseCode);
+                        if (temp.size()!=0) {
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courses.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsNSearch.setText("");
+                            crsCSearch.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                    else if (courseCode.equals("")&&!courseName.equals("")) {
+                        temp  = db.searchCourseByName(courseName);
+                        if (temp.size()!=0) {
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courses.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsNSearch.setText("");
+                            crsCSearch.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                    else {
+                        if (exists) {
+                            temp  =db.searchCourse(courseCode, courseName);
+                            adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, temp);
+                            courses.setAdapter(adapter);
+                            errorMsg.setText("");
+                        }
+                        else {
+                            crsNSearch.setText("");
+                            crsCSearch.setText("");
+                            displayCourses();
+                            errorMsg.setText("Invalid Course code/name");
+                        }
+                    }
+                }
                 break;
         }
     }
