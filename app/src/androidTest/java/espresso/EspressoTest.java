@@ -1,5 +1,6 @@
 package espresso;
 
+import static androidx.test.core.app.ApplicationProvider.getApplicationContext;
 import static androidx.test.espresso.Espresso.*;
 import static androidx.test.espresso.assertion.PositionAssertions.isCompletelyLeftOf;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -15,9 +16,14 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import com.example.seg2105_termprojectcourseenrollmentapp.CourseEnrollmentApp;
+import com.example.seg2105_termprojectcourseenrollmentapp.DBHelper;
+import com.example.seg2105_termprojectcourseenrollmentapp.LoginPage;
 import com.example.seg2105_termprojectcourseenrollmentapp.StudentHomePage;
 import com.example.seg2105_termprojectcourseenrollmentapp.R;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,10 +33,11 @@ import org.junit.runner.RunWith;
 public class EspressoTest {
     @Rule
     public ActivityScenarioRule<StudentHomePage> activityRule =
-            new ActivityScenarioRule<StudentHomePage>(StudentHomePage.class);
+            new ActivityScenarioRule<>(StudentHomePage.class);
+
 
     @Test
-    public void courseCodeIsDisplayedAsHint(){
+    public void courseCodeIsDisplayedAsHint() {
         onView(withHint("Course Code")).check(matches(isDisplayed()));
         onView(withHint("Course Code")).check(isCompletelyLeftOf(withId(R.id.crsCSearch)));
     }
@@ -63,10 +70,11 @@ public class EspressoTest {
     public void studentCourseIsDisplayed(){
         onView(withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
         onView(withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
-        onView(withId(R.id.courseList).check((ViewAssertions.matches (Matchers.withListSize (1)))));
+        onView(withId(R.id.courseList)).check((ViewAssertions.matches(Matchers.withListSize(1))));
         onView(withId(R.id.crsCSearch)).perform(ViewActions.clearText(), ViewActions.typeText("MAT"));
         onView(withId(R.id.crsNSearch)).perform(ViewActions.clearText(),ViewActions.typeText("1302"));
     }
+
 
 
 }

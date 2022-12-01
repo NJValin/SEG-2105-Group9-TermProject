@@ -11,8 +11,8 @@ public class Matchers {
     public static Matcher<View> withListSize(int size) {
         return new TypeSafeMatcher<View>() {
             @Override
-            protected boolean matchesSafely(View item) {
-                return ((ListView) item).getCount()==size;
+            protected boolean matchesSafely(View view) {
+                return ((ListView)view).getCount()==size;
             }
 
             @Override

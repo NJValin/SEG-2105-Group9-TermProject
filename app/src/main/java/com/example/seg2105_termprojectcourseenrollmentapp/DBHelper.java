@@ -196,7 +196,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db=this.getReadableDatabase();
         Cursor c = db.rawQuery("select * from "+username+"Classes" , null);
         while(c.moveToNext()) {
-            x.add(c.getString(0)+" "+c.getString(1)+" "+c.getString(2)+": "+c.getString(3)+", "+
+            x.add(c.getString(0)+": "+c.getString(1)+": "+c.getString(2)+": "+c.getString(3)+", "+
                     c.getString(4)+": "+c.getString(5));
         }
         String[] toReturn = new String[x.size()];
@@ -451,6 +451,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table users");
         db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
 
+    }
+    public void deleteTestUser() {
+        db = this.getWritableDatabase();
+        db.execSQL("delete from users where userName=test1");
     }
     public void deleteAllCourses() {
         db = this.getWritableDatabase();

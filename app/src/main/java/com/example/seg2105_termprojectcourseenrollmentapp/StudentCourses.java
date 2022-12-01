@@ -35,7 +35,7 @@ public class StudentCourses extends AppCompatActivity {
        crsCToDrop = crsNToDrop = "";
 
        db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
-
+       displayCourses();
         courses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -43,16 +43,18 @@ public class StudentCourses extends AppCompatActivity {
                 if (o.toString().equals("No Courses at the moment.")) {
                     return;
                 }
-                crsCToDrop = o.toString().split(" ")[0];
-                crsNToDrop = o.toString().split(" ")[1];
+                crsCToDrop = o.toString().split(": ")[0];
+                crsNToDrop = o.toString().split(": ")[1];
                 selectItem(o);
             }
 
         });
+        back.setOnClickListener(this::onClick);
+        dropCrs.setOnClickListener(this::onClick);
     }
     private void displayCourses() {
         course.clear();
-        String[] x = db.courseListForInstructor();
+        String[] x = db.getSchoolSchedule(username);
         if (x.length==1&&x[0].equals("")) {
             course.add("No Courses at the moment.");
             return;
@@ -71,8 +73,9 @@ public class StudentCourses extends AppCompatActivity {
                 reset();
                 break;
             case R.id.dropCourse:
-                db.dropClass(crsCToDrop, username);
-                reset();
+                //db.dropClass(crsCToDrop, username);
+                error.setText(crsCToDrop+" "+crsNToDrop+" "+username);
+                //reset();
                 break;
         }
     }
