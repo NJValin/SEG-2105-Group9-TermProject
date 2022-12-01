@@ -157,6 +157,9 @@ public class DBHelper extends SQLiteOpenHelper {
         boolean b2 = c2.getCount()==0;
         Cursor c3 = db.rawQuery("select * from "+userName+"Classes where dayTwo=? and timeTwo=?", new String[] {times[2], times[3]});
         boolean b3 = c3.getCount()==0;
+        c.close();
+        c2.close();
+        c3.close();
         return b&&(b2||b3);
     }
     //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
@@ -164,8 +167,13 @@ public class DBHelper extends SQLiteOpenHelper {
     private String[] getClassInfo(String crsCode) {
         String[] toReturn;
         db = this.getWritableDatabase();
-        Cursor c = db.rawQuery("select firstDay, firstDayTime, secondDay, secondDayTime from courses where courseCode=?",new String[] {crsCode});
-        toReturn = new String[] {c.getString(0), c.getString(1), c.getString(2), c.getString(3)};
+        Cursor c = db.rawQuery("select * from courses where courseCode=?",new String[] {crsCode});
+        if (c.moveToNext()) {
+            toReturn = new String[] {c.getString(2), c.getString(3), c.getString(4), c.getString(5)};
+        }
+        else {
+            toReturn = new String[] {""};
+        }
         return toReturn;
     }
     public void dropClass(String crsCode, String userName) {

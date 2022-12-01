@@ -5,6 +5,9 @@ import static androidx.test.espresso.assertion.PositionAssertions.isCompletelyLe
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 
+import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.Matchers.hasToString;
+
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -32,17 +35,17 @@ public class EspressoTest {
     }
 
     @Test
-    public void courseNameIsDisplayedAsHint(){
+    public void courseNameIsDisplayedAsHint() {
         onView(withHint("Course Name")).check(matches(isDisplayed()));
         onView(withHint("Course Name")).check(isCompletelyLeftOf(withId(R.id.crsNSearch)));
     }
 
     @Test
     public void enrollIsCorrect(){
+        String x = "ENG: 1102: Dr.N/A, Days:N/A @ N/A, N/A @ N/A student limit: 0\nN/A";
         onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
         onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
-        onView(withId(R.id.enroll)).perform(ViewActions.click());
-
+        onData(hasToString(startsWith(x))).inAdapterView(withId(R.id.courseList)).atPosition(0).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.goToUsersClasses)).perform(ViewActions.click());
     }
 
@@ -59,9 +62,9 @@ public class EspressoTest {
     public void studentCourseIsDisplayed(){
         onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
         onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
-        onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("MAT"));
-        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1302"));
         onView(ViewMatchers.withId(R.id.courseList)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.clearText(), ViewActions.typeText("MAT"));
+        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.clearText(),ViewActions.typeText("1302"));
     }
 
 
