@@ -93,7 +93,7 @@ public class StudentHomePage extends AppCompatActivity {
                         reset();
                     }
                     else {
-                        errorMsg.setText("Failed to enroll");
+                        errorMsg.setText("Failed to enrol");
                         displayCourses();
                         crsCSearch.setText("");
                         crsNSearch.setText("");
@@ -107,7 +107,7 @@ public class StudentHomePage extends AppCompatActivity {
                     }
                 }
                 else {
-                    errorMsg.setText("Time conflict or other issue - Can't enroll");
+                    errorMsg.setText("Time conflict or other issue - Can't enrol");
                     displayCourses();
                     crsCSearch.setText("");
                     crsNSearch.setText("");
