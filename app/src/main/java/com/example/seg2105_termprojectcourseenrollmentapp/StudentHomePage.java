@@ -48,9 +48,9 @@ public class StudentHomePage extends AppCompatActivity {
         db = new DBHelper((CourseEnrollmentApp)getApplicationContext());
         Bundle extras = getIntent().getExtras();
         course = new ArrayList<>();
-        //name = db.getName(extras.getString("username"));
-        //username = extras.getString("username");
-        //wlcm.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as a student");
+        name = db.getName(extras.getString("username"));
+        username = extras.getString("username");
+        wlcm.setText("Welcome "+name[0]+" "+name[1]+"! you are logged in as a student");
         displayCourses();
         courses.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,23 +83,41 @@ public class StudentHomePage extends AppCompatActivity {
                 displayEnrolledCourses();
                 break;
             case R.id.enroll: // db.validateEnrollment(crsCode,username) && db.enroll(crsCode,crsName,username)
-                //System.out.println("People");
-                if(db.validateEnrollment(crsCode,username) && db.enroll(crsCode,crsName,username)){
-                    //System.out.println("Things");
-                    errorMsg.setText("");
-                    enroll.setVisibility(View.INVISIBLE);
-                    //Add to validate enrollment the
-                    /* db2 = db.getWritableDatabase();
-                    Cursor c = db.rawQuery("select * from "+crsCode+"Students where student=?", new String[] {userName});
-                    enrolledCourses =
-                       */
-                } else{
-                  //  System.out.println("Stuff");
-                    errorMsg.setText("Cannot enroll in course");
-                    crsCode = "";
-                    crsName = "";
-                    displayCourses();
+                errorMsg.setText(crsCode+": "+crsName+", "+username);
+                boolean isValid = validate(crsCode, username);
+                if (isValid) {
+                    boolean x = db.enroll(crsCode, crsName, username);
+                    if (x) {
+                        reset();
+                    }
+                    else {
+                        errorMsg.setText("Failed to enroll");
+                        displayCourses();
+                        crsCSearch.setText("");
+                        crsNSearch.setText("");
+                        crsName = crsCode = "";
+                        enroll.setVisibility(View.INVISIBLE);
+                        toEnrolledCourses.setVisibility(View.VISIBLE);
+                        crsNSearch.setVisibility(View.VISIBLE);
+                        crsCSearch.setVisibility(View.VISIBLE);
+                        search.setVisibility(View.VISIBLE);
+                        wlcm.setVisibility(View.VISIBLE);
+                    }
                 }
+                else {
+                    errorMsg.setText("Time conflict or other issue - Can't enroll");
+                    displayCourses();
+                    crsCSearch.setText("");
+                    crsNSearch.setText("");
+                    crsName = crsCode = "";
+                    enroll.setVisibility(View.INVISIBLE);
+                    toEnrolledCourses.setVisibility(View.VISIBLE);
+                    crsNSearch.setVisibility(View.VISIBLE);
+                    crsCSearch.setVisibility(View.VISIBLE);
+                    search.setVisibility(View.VISIBLE);
+                    wlcm.setVisibility(View.VISIBLE);
+                }
+
 
                 break;
 
@@ -218,7 +236,7 @@ public class StudentHomePage extends AppCompatActivity {
             enrolledCourse.add(q);
         }
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, enrolledCourse;);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, enrolledCourse);
         courses.setAdapter(adapter);
     }
     private void search(String crsC, String crsN) {
