@@ -456,6 +456,25 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         return toReturn;
     }
+    //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+    //                " instructorName Text, description Text, capacity Integer)");
+    public ArrayList<String> searchCourseByDay(String day) {
+        db = this.getWritableDatabase();
+        ArrayList<String> toReturn = new ArrayList<>();
+        String[] x = this.courseListForInstructor();
+        Cursor c = db.rawQuery("select * from courses where firstDay=?", new String[] {day});
+        Cursor c2 = db.rawQuery("select * from courses where secondDay=?", new String[] {day});
+        while (c.moveToNext()) {
+            toReturn.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
+                    +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8)+"\n"+c.getString(7));
+        }
+        while (c2.moveToNext()) {
+            toReturn.add(c.getString(0)+": "+c.getString(1)+": Dr."+c.getString(6)+", Days: "+c.getString(2)+" @ "+c.getString(3)+", "
+                    +c.getString(4)+" @ "+c.getString(5)+" student limit: "+c.getString(8)+"\n"+c.getString(7));
+        }
+
+        return toReturn;
+    }
     public String[] getName(String username) {
         db = this.getWritableDatabase();
         Cursor crsr = db.rawQuery("select * from users where userName = ?", new String[] {username});

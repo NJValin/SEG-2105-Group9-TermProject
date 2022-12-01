@@ -15,7 +15,7 @@ import java.util.List;
 
 public class StudentCourses extends AppCompatActivity {
     private ListView courses;
-    private Button back, dropCrs;
+    private Button back, dropCrs, showStd;
     private TextView error;
     private ArrayList<String> course;
     private ArrayAdapter<String> adapter;
