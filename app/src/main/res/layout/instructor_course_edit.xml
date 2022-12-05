@@ -35,7 +35,7 @@
             android:id="@+id/studentList"
             android:layout_width="407dp"
             android:layout_height="340dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:divider="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

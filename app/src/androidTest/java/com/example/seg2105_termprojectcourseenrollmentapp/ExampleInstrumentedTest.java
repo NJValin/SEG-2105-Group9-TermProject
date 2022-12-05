@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import java.util.Random;
 import static org.junit.Assert.*;
 import java.io.IOException;
 /**
@@ -19,77 +20,55 @@ import java.io.IOException;
 public class ExampleInstrumentedTest {
     DBHelperForTest db;
     Context context;
+    Random x;
     @Before
     public void setUp() {
         context = InstrumentationRegistry.getInstrumentation().getTargetContext();
         db = new DBHelperForTest(context);
         db.deleteAllCourses();
+        x = new Random();
         db.deleteAllUsers();
     }
     @Test
     public void testRegisterAsStudent() {
+
         db = new DBHelperForTest(context);
-        db.addUsers("test","pass","student", "Hello", "world");
-        assertEquals(true, db.userExists("test"));
+        String username = "test"+x.nextInt(100);
+        db.addUsers(username,"pass","student", "Hello", "world");
+        assertEquals(true, db.userExists(username));
         db.deleteAllCourses();
-    }
-
-    @Test
-    public void testAddCourse() {
-        db = new DBHelperForTest(context);
-        for (int i =0; i<50;i++) {
-            db.addCourse("crs"+i, "i="+i);
-        }
-        assertEquals(50, db.courseList().length);
-        db.deleteAllCourses();
-
-    }
-    @Test
-    public void testDeleteCourse() {
-        db = new DBHelperForTest(context);
-        for (int x =1; x<10;x++) {
-            db.addCourse("crs"+x, "i="+x);
-        }
-        int i = db.courseList().length;
-        db.removeCourse("crs"+i, "i="+i);
-        assertEquals(i-1, db.courseList().length);
-        db.deleteAllCourses();
-    }
-    @Test
-    public void testUserExists(){
-        db = new DBHelperForTest(context);
-        assertEquals(false,false);
-        for (int i =0; i<50;i++) {
-            db.addUsers("test"+i,"pass","student", "Hello", "world");
-        }
-        assertEquals(false, db.userExists("test50"));
-        db.deleteAllUsers();
-    }
-
-    @Test
-    public void testCheckLogin(){
-        db = new DBHelperForTest(context);
-        assertEquals(false,false);
-        db.addUsers("test","pass","student", "Hello", "world");
-        assertEquals(false, db.checkLogin("test1", "pass"));
-        db.deleteAllUsers();
-    }
-
-    @Test
-    public void testSetInstructor() {
-        db = new DBHelperForTest(context);
-        db.addCourse("testCourse", "test");
-        assertEquals("N/A", db.getInstructor("testCourse", "test"));
-        db.setInstructor("testCourse", "test", new String[] {"Justin", "Trudeau"});
-        assertEquals("Justin Trudeau", db.getInstructor("testCourse", "test"));
-        db.deleteAllUsers();
     }
 
     @Test
     public void testEnroll(){
         db = new DBHelperForTest(context);
-        assertFalse( db.enrol("testCourse","test","testUser"));
+        assertFalse( db.enrol("testCourse","tess","testUser"));
         db.deleteAllUsers();
+    }
+    @Test
+    public void testEnroll2() {
+        db = new DBHelperForTest(context);
+        String crsCode = "testCoursse"+x.nextInt(100);
+        String username = "user"+x.nextInt(100);
+        db.addCourse(crsCode, "test");
+        db.addUsers(username, "pass", "student", "test", "test");
+        db.enrol(crsCode, "test", username);
+        assertEquals(1, db.getMyCoursesSize(username));
+        db.deleteAllUsers();
+        db.deleteAllCourses();
+    }
+    @Test
+    public void testDropCourse() {
+        db = new DBHelperForTest(context);
+        String crsCode = "testCoursse"+x.nextInt(100);
+        String username = "user"+x.nextInt(100);
+        db.addCourse(crsCode, "test");
+        db.addUsers(username, "pass", "student", "test", "test");
+        db.enrol(crsCode, "test", username);
+        db.dropClass(crsCode, username);
+        assertEquals(0, db.getMyCoursesSize(username));
+        db.deleteAllUsers();
+        db.deleteAllCourses();
     }
 
 

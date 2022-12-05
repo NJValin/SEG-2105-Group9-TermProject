@@ -138,6 +138,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
                 dropCrs.setVisibility(View.INVISIBLE);
                 stdList.setVisibility(View.GONE);
                 showStd.setVisibility(View.INVISIBLE);
+                showStd.setVisibility(View.INVISIBLE);
                 courseList.setVisibility(View.VISIBLE);
                 errorMsg.setText("");
                 dayOne = "";
@@ -187,6 +188,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     daytwotime.setVisibility(View.INVISIBLE);
                     dayonetime.setVisibility(View.INVISIBLE);
                     dropCrs.setVisibility(View.INVISIBLE);
+                    showStd.setVisibility(View.INVISIBLE);
                     errorMsg.setText("");
                     dayOne = "";
                     dayTwo = "";
@@ -215,6 +217,8 @@ public class InstructorCourseEdit extends AppCompatActivity {
                     daytwotime.setVisibility(View.INVISIBLE);
                     dayonetime.setVisibility(View.INVISIBLE);
                     dropCrs.setVisibility(View.INVISIBLE);
+
+                    showStd.setVisibility(View.INVISIBLE);
                     errorMsg.setText("");
                     dayOne = "";
                     dayTwo = "";
@@ -248,6 +252,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
                         daytwo.setVisibility(View.INVISIBLE);
                         daytwotime.setVisibility(View.INVISIBLE);
                         dayonetime.setVisibility(View.INVISIBLE);
+                        showStd.setVisibility(View.INVISIBLE);
                         dropCrs.setVisibility(View.INVISIBLE);
                     }
                     else {
@@ -269,6 +274,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
                         daytwotime.setVisibility(View.INVISIBLE);
                         dayonetime.setVisibility(View.INVISIBLE);
                         dropCrs.setVisibility(View.INVISIBLE);
+                        showStd.setVisibility(View.INVISIBLE);
                         errorMsg.setText("");
                     }
                     dayOne = "";
@@ -344,7 +350,7 @@ public class InstructorCourseEdit extends AppCompatActivity {
             return;
         }
         for (String q: x) {
-            course.add(q);
+            students.add(q);
         }
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, students);
         stdList.setAdapter(adapter);

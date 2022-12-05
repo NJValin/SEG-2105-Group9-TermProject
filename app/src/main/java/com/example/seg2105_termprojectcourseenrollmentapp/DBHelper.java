@@ -153,10 +153,12 @@ public class DBHelper extends SQLiteOpenHelper {
         boolean b=c.getCount()==0;
         //check that there are no time conflicts
         String[] times = getClassInfo(crsCode);
+
         Cursor c2 = db.rawQuery("select * from "+userName+"Classes where dayOne=? and timeOne=?",new String[] {times[0], times[1]});
         boolean b2 = c2.getCount()==0;
         Cursor c3 = db.rawQuery("select * from "+userName+"Classes where dayTwo=? and timeTwo=?", new String[] {times[2], times[3]});
         boolean b3 = c3.getCount()==0;
+
         c.close();
         c2.close();
         c3.close();
@@ -489,21 +491,32 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
     }
+    public int getMyCoursesSize(String username) {
+        int r;
+        db= this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from "+username+"Classes",null);
+        r = c.getCount();
+        return r;
+    }
     public  void deleteAllUsers() {
         db = this.getWritableDatabase();
-        db.execSQL("drop table users");
-        db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
+        Cursor c = db.rawQuery("select userName from users", null);
+        while (c.moveToNext()) {
+            removeUser(c.getString(0));
+        }
+        //db.execSQL("drop table users");
+        //db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
 
-    }
-    public void deleteTestUser() {
-        db = this.getWritableDatabase();
-        db.execSQL("delete from users where userName=test1");
     }
     public void deleteAllCourses() {
         db = this.getWritableDatabase();
-        db.execSQL("drop table courses");
-        db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
-                " instructorName Text, description Text, capacity Integer)");
+        Cursor c = db.rawQuery("select courseCode, courseName from courses", null);
+        while (c.moveToNext()) {
+            removeCourse(c.getString(0), c.getString(1));
+        }
+        //db.execSQL("drop table courses");
+        //db.execSQL("create Table courses(courseCode Text primary key, courseName Text, firstDay Text, firstDayTime Text, secondDay Text, secondDayTime Text," +
+        //        " instructorName Text, description Text, capacity Integer)");
     }
 
 

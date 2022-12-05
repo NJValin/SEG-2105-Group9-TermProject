@@ -137,11 +137,16 @@ public class DBHelperForTest extends SQLiteOpenHelper {
         ContentValues k = new ContentValues();
         k.put("crsCode", crsCode);
         k.put("crsName", crsName);
-        String[] classCred = getClassInfo(crsCode);
-        k.put("dayOne", classCred[0]);
-        k.put("timeOne", classCred[1]);
-        k.put("dayTwo", classCred[2]);
-        k.put("timeTwo", classCred[3]);
+        try {
+            String[] classCred = getClassInfo(crsCode);
+            k.put("dayOne", classCred[0]);
+            k.put("timeOne", classCred[1]);
+            k.put("dayTwo", classCred[2]);
+            k.put("timeTwo", classCred[3]);
+        }
+        catch (ArrayIndexOutOfBoundsException e ) {
+            return false;
+        }
         long result = db.insert(crsCode+"Students", null, s);
         long result2 = db.insert(userName+"Classes", null, k);
         return result!=-1&&result2!=-1;
@@ -475,6 +480,13 @@ public class DBHelperForTest extends SQLiteOpenHelper {
         db.execSQL("drop table users");
         db.execSQL("create Table users(userName Text primary key, password Text, userType Text, firstname Text, lastname Text)");
 
+    }
+    public int getMyCoursesSize(String username) {
+        int r;
+        db= this.getWritableDatabase();
+        Cursor c = db.rawQuery("select * from "+username+"Classes",null);
+        r = c.getCount();
+        return r;
     }
     public void deleteTestUser() {
         db = this.getWritableDatabase();

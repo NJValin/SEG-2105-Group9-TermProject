@@ -36,27 +36,6 @@ public class EspressoTest {
             new ActivityScenarioRule<>(StudentHomePage.class);
 
 
-
-    @Test
-    public void courseCodeIsDisplayedAsHint() {
-        onView(withHint("Course Code")).check(matches(isDisplayed()));
-        onView(withHint("Course Code")).check(isCompletelyLeftOf(withId(R.id.crsCSearch)));
-    }
-
-    @Test
-    public void courseNameIsDisplayedAsHint() {
-        onView(withHint("Course Name")).check(matches(isDisplayed()));
-        onView(withHint("Course Name")).check(isCompletelyLeftOf(withId(R.id.crsNSearch)));
-    }
-    @Test
-    public void testIncorrectSearch(){
-
-        onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
-        onView(ViewMatchers.withId(R.id.crsNSearch)).perform(ViewActions.typeText("1101"));
-        onView(ViewMatchers.withId(R.id.goToUsersClasses)).perform(ViewActions.click());
-        onView(ViewMatchers.withId(R.id.error)).check(matches(withText("Invalid Course code/name")));
-    }
-
     @Test
     public void searchIsCorrect(){
         onView(ViewMatchers.withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
@@ -65,16 +44,5 @@ public class EspressoTest {
 
 
     }
-
-    @Test
-    public void studentCourseIsDisplayed(){
-        onView(withId(R.id.crsCSearch)).perform(ViewActions.typeText("ENG"));
-        onView(withId(R.id.crsNSearch)).perform(ViewActions.typeText("1102"));
-        onView(withId(R.id.courseList)).check((ViewAssertions.matches(Matchers.withListSize(1))));
-        onView(withId(R.id.crsCSearch)).perform(ViewActions.clearText(), ViewActions.typeText("MAT"));
-        onView(withId(R.id.crsNSearch)).perform(ViewActions.clearText(),ViewActions.typeText("1302"));
-    }
-
-
 
 }
