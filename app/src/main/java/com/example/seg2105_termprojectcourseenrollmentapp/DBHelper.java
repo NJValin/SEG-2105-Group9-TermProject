@@ -372,9 +372,7 @@ public class DBHelper extends SQLiteOpenHelper {
         if (userType.equals("admin")|| userType.equals("null")) {
             return false;
         }
-        if (userType.equals("student")) {
-            db.execSQL("drop table "+username+"Classes");
-        }
+        db.execSQL("drop table if exists "+username+"Classes");
         db.execSQL("delete from users where userName=?", new String[] {username});
 
         return true;
